@@ -36,12 +36,14 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
+      <button @click ="getRestaurant()">Get Restaurant</button>
     </form>
   </div>
 </template>
 
 <script>
 import authService from '../services/AuthService';
+import tinderService from '../services/TinderService';
 
 export default {
   name: 'register',
@@ -55,6 +57,7 @@ export default {
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
+      spot: []
     };
   },
   methods: {
@@ -86,6 +89,15 @@ export default {
       this.registrationErrors = false;
       this.registrationErrorMsg = 'There were problems registering this user.';
     },
+
+    getRestaurant() {
+      tinderService.getRestaurant().then( (response) => {
+        if (response.status === 200) {
+          this.spot = response.data.results;
+          console.log(this.spot);
+        }
+      })
+    }
   },
 };
 </script>
