@@ -18,6 +18,15 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+CREATE TABLE favorites (
+        id SERIAL,
+	user_id int NOT NULL,
+	business_id char(22) NOT NULL,
+	CONSTRAINT pk_id PRIMARY KEY (id),
+	CONSTRAINT user_business_id UNIQUE (user_id, business_id),
+	CONSTRAINT fk_favorites_user FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
