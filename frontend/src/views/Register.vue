@@ -32,11 +32,25 @@
         v-model="user.confirmPassword"
         required
       />
+      <form action="submit">
+        <input type="text" name="name" id="name" placeholder="Full Name" required>
+        <input type="email" name="email" id="emailaddress" placeholder="Email Address" required>
+        <input type="number" name="phone" id="phone-number" placeholder="Phone Number">
+        <input type="password" name="password" id="password" placeholder="Password" required>
+        <input type="password" name="password" id="confirm-password" placeholder="Password" required>
+        <input type="text" name="address" id="address1" placeholder="Street Address">
+        <input type="text" name="address" id="address2" placeholder="Street Address 2">
+        <input type="text" name="city" id="city" placeholder="City">
+        <input type="text" name="state" id="state" placeholder="State/Province">
+        <input type="number" name="zipcode" id="zipcode" placeholder="Zip Code" required>
+        <input type="text" name="country" id="Country" placeholder="Country">
+        <button action="submit">Register</button>
+    </form>
       <router-link :to="{ name: 'login' }">Yinz have an account?</router-link>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
-      <button @click ="getRestaurant()">Get Restaurant</button>
+      
     </form>
   </div>
 </template>

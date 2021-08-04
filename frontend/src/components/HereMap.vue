@@ -1,5 +1,5 @@
 <template>
-  <div id="map">
+  <div id="map" class="">
   <!--In the following div the HERE Map will render-->
     <div id="mapContainer" style="height:600px;width:100%" ref="hereMap"></div>
   </div>
@@ -40,7 +40,7 @@ export default {
 
       // Instantiate (and display) a map object:
       var map = new H.Map(mapContainer, maptypes.vector.normal.map, {
-        zoom: 10,
+        zoom: 12,
         center: this.center,
         lat: 40.730610, 
         lng: -73.935242 
