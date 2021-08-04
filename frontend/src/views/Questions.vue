@@ -1,22 +1,18 @@
 <template>
-<div>
-    <button @click ="getRestaurant()">Get Restaurant</button>
-
-</div>
+<question-form />
   
 </template>
 
 <script>
+import QuestionForm from '../components/QuestionForm.vue'
 import tinderService from '../services/TinderService'
 export default {
-    name: "question",
+    
     components: {
+        QuestionForm
         
     }
 
 }
 </script>
 
-<style>
-
-</style>
