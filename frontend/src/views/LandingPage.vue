@@ -1,39 +1,29 @@
 <template>
-<section class="hero">
-     
-     <div class="hero-body">
-      
-   
-  <div class="home">
-    <h1>Home</h1>
-     <div class="left-div">
+  <div class = "landing-page">
+    <div class="left-div">
         <div class="logo">
         <h1>restaurant tinder</h1>
         <i class="fas fa-fire fa-3x"></i>
         </div>
-           </div>
     </div>
     <div class="right-div">
         <a href="#" id="login">Sign in</a>
         <h2>Register to start swiping and find your perfect tasty match</h2>
         <form action="submit">
-            <!-- <input type="email" name="Email" id="email" placeholder="Enter your email"> -->
-            <button class="btns" action="submit">Register</button>
+            <input type="email" name="Email" id="email" placeholder="Enter your email">
+            <button action="submit">Register</button>
         </form>
     </div>
-    <!-- <p>If you see this.......Yinz are Authenticated</p> -->
-  </div>
-  </section>
+</div>
 </template>
 
 <script>
 export default {
-  name: "home"
-};
+    name: "landing-page"
+}
 </script>
 
-<style scoped>
-
+<style>
 body {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -41,33 +31,40 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .left-div {
-    background-image: url("https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80");
+    background-image: url("edgar-castrejon-1SPu0KT-Ejg-unsplash.jpg");
     height: 100vh;
     background-size: cover;
 }
+
 h1 {
     font-family: 'Acme', sans-serif;
     display: inline;
     color: white;
     font-size: 3.5rem;
 }
+
 .fa-fire {
     color: rgb(237, 93, 77);
 }
+
 .logo {
     padding-left: 50px;
     padding-top: 25px;
 }
+
 .right-div {
   align-items: center;
 }
+
 h2 {
     font-family: 'Acme', sans-serif;
     font-size: 2rem;
     margin-left: 25px;
     margin-top: 200px;
 }
+
 button {
     display:inline-block;
     padding:0.5em 3em;
@@ -84,10 +81,12 @@ button {
     text-align:center;
     transition: all 0.15s;
 }
+
 button:hover {
     background-color:rgb(211, 82, 67);
     border-color: rgb(211, 82, 67);
 }
+
 #email {
     margin-left: 25px;
     font-size: 1.33rem;
@@ -98,11 +97,6 @@ button:hover {
     text-align: center;
 }
 
-  .btns{
-    display: flex;
-    align-content: center;
-      
-    }
 #login {
     display: block;
     text-align: right;
@@ -113,9 +107,11 @@ button:hover {
     margin-top: 15px;
     margin-right: 20px;
 }
+
 #login:hover {
     text-decoration: underline;
 }
+
 @media only screen and (max-width: 1400px){
     button {
         display: block;
@@ -127,24 +123,26 @@ button:hover {
         margin: 25px;
     }
 }
+
 @media only screen and (max-width: 881px) {
     body {
         grid-template-columns: 1fr;
+
     }
+
     .logo {
         margin-top: 40px;
         position: absolute;
     }
+
     #login {
         position: absolute;
         top: 5px;
         right: 2px;
     }
+
     h2 {
         margin-top: 20px;
     }
-
-  
 }
-
 </style>
