@@ -27,14 +27,15 @@
     <div class="right-div">
         <a v-on:click="showlogin = ! showlogin" id="login" v-show="!showlogin">Sign in</a>
         <a v-on:click="showlogin = ! showlogin" id="registeroption" v-show="showlogin">Don't have an account? Sign up!</a>
+        
         <form class="form-signin" @submit.prevent="login" v-show="showlogin">
           <input type="text" id="username" placeholder="username">
           <input type="password" id="password" placeholder="password">
-          <button type="submit">Sign in</button>
+          <button action="submit" type="submit" id="signin">Sign in</button>
         </form>
 
         <div class="register" v-show="!showlogin">
-        <h2>Register to start swiping and find your perfect tasty match</h2>
+        <h2>Register to start swiping and find your perfect tasty match <i class="fas fa-fire"></i></h2>
         <button id="register" action="submit" v-show="! showRegistration" v-on:click="showRegistration = ! showRegistration">Register</button>
         </div>
     </div>
@@ -172,7 +173,7 @@ export default {
 }
 
 .form-signin {
-  margin-top: 100px
+  margin-top: 100px;
 }
 
 .form-signin input {
@@ -219,11 +220,12 @@ h2 {
 }
 button {
     display:inline-block;
-    padding:0.5em 3em;
+    margin: 25px;
+        padding: 0.8rem 8.3rem;
     border: 0.16em solid rgb(237, 93, 77);
     border-radius: 6px;
     background-color: rgb(237, 93, 77);
-    margin:0 0.3em 0.3em 0;
+    
     box-sizing: border-box;
     text-decoration:none;
     text-transform:uppercase;
@@ -237,6 +239,7 @@ button:hover {
     background-color:rgb(211, 82, 67);
     border-color: rgb(211, 82, 67);
 }
+
 #email {
     margin-left: 25px;
     font-size: 1.33rem;
@@ -263,10 +266,6 @@ button:hover {
     button {
         margin: 25px;
         padding: 0.8rem 8.3rem;
-    }
-    #email {
-        display: block;
-        margin: 25px;
     }
 }
 @media only screen and (max-width: 881px) {
