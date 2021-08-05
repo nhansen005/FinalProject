@@ -183,11 +183,11 @@ export default {
 }
 
 .form-signup {
-  margin-top: 100px
+  margin-top: 70px
 }
 
 .form-signup input {
-    padding:0.5em 3em;
+    padding:0.3em 3em;
     margin:0 0.3em 0.3em 0;
     font-family:'Roboto',sans-serif;
     font-size: 1rem;
@@ -291,6 +291,10 @@ button:hover {
       top: 200px;
       right: 50px;
       left: 50px;
+    }
+
+    .form-signup {
+      margin-top: 30px;
     }
 }
 
