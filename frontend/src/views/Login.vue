@@ -6,7 +6,7 @@
         <h1>restaurant tinder</h1>
         <i class="fas fa-fire fa-3x"></i>
         <div id="registration-form">
-        <form class="form-signup" v-show="showRegistration && !showlogin">
+        <form class="form-signup" v-show="showRegistration && !showlogin" @submit.prevent="register">
           <input type="text" name="name" id="firstname" placeholder="First Name" required>
           <input type="text" name="name" id="lastname" placeholder="Last Name" required>
           <input type="email" name="email" id="emailaddress" placeholder="Email Address" required>
@@ -29,7 +29,7 @@
         <a v-on:click="showlogin = ! showlogin" id="registeroption" v-show="showlogin">Don't have an account? Sign up!</a>
         
         <form class="form-signin" @submit.prevent="login" v-show="showlogin">
-          <input type="text" id="username" placeholder="username">
+          <input type="email" id="username" placeholder="email address">
           <input type="password" id="password" placeholder="password">
           <button action="submit" type="submit" id="signin">Sign in</button>
         </form>
@@ -40,74 +40,6 @@
         </div>
     </div>
 </div>
-
-  <!-- <div id="login" class="text-center">
-    <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Yinz Gotta Sign In</h1>
-      <div
-        class="alert alert-danger"
-        role="alert"
-        v-if="invalidCredentials"
-      >Quit jaggin off! Invalid username and password!</div>
-      <div
-        class="alert alert-success"
-        role="alert"
-        v-if="this.$route.query.registration"
-      >Thank Yinz for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
-      <input
-        type="text"
-        id="username"
-        class="form-control"
-        placeholder="Username"
-        v-model="user.username"
-        required
-        autofocus
-      />
-      <label for="password" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="password"
-        class="form-control"
-        placeholder="Password"
-        v-model="user.password"
-        required
-      />
-      <router-link :to="{ name: 'register' }">Yinz need an account?</router-link>
-      <button type="submit">Sign in</button>
-    </form>
-
-    
-
-    
-    <section class="section">
-			<div class="container">
-				<div class="columns">
-					<div class="column">
-            <div class ="notification is-info">
-						R Yinz Hungry?!
-            <p>
-              ᕕ( ᐛ )ᕗ
-            </p> 
-            </div>
-					</div>
-					<div class="column">
-            <div class ="notification is-warning">
-					<p>Can't find the PERFECT spot to eat?! </p>	
-            <p> ⦤(^ー^)⦥ </p>
-
-          </div>
-					</div>
-					<div class="column">
-            <div class ="notification is-primary">
-								Restaurant-Tinder™ TIME! 
-                <p>٩(^ᴗ^)۶</p>
-              </div>
-					</div>
-				</div>
-			</div>
-		</section>
-  </div> -->
 </template>
 
 <script>
@@ -145,10 +77,35 @@ export default {
             this.invalidCredentials = true;
           }
         });
+    },
+    register() {
+      if (this.user.password != this.user.confirmPassword) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+      } else {
+        authService
+          .register(this.user)
+          .then((response) => {
+            if (response.status == 201) {
+              this.$router.push({
+                path: '/login',
+                query: { registration: 'success' },
+              });
+            }
+          })
+          .catch((error) => {
+            const response = error.response;
+            this.registrationErrors = true;
+            if (response.status === 400) {
+              this.registrationErrorMsg = 'Bad Request: Validation Errors';
+            }
+          });
+      }
     }
   }
 };
 </script>
+
 <style scoped>
 
 .landing-page {

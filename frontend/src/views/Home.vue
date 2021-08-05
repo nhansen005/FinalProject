@@ -1,34 +1,26 @@
 <template>
-<section class="hero">
-     
-     <div class="hero-body">
-      
-   
-  <div class="home">
-    <h1>Home</h1>
-     <div class="left-div">
-        <div class="logo">
-        <h1>restaurant tinder</h1>
-        <i class="fas fa-fire fa-3x"></i>
+    <div>
+        <div class="restaurant">
         </div>
-           </div>
+
     </div>
-    <div class="right-div">
-        <a href="#" id="login">Sign in</a>
-        <h2>Register to start swiping and find your perfect tasty match</h2>
-        <form action="submit">
-            <!-- <input type="email" name="Email" id="email" placeholder="Enter your email"> -->
-            <button class="btns" action="submit">Register</button>
-        </form>
-    </div>
-    <!-- <p>If you see this.......Yinz are Authenticated</p> -->
-  </div>
-  </section>
 </template>
 
 <script>
+import tinderService from '../services/TinderService';
+
 export default {
-  name: "home"
+  name: "home",
+  data() {
+      return {
+      restaurants: []
+      };
+  },
+  created() {
+    tinderService.getRestaurant().then(response => {
+      this.restaurants = response.data;
+    });
+  },
 };
 </script>
 
