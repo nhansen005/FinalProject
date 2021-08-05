@@ -6,7 +6,7 @@
         <h1>restaurant tinder</h1>
         <i class="fas fa-fire fa-3x"></i>
         <div id="registration-form">
-        <form class="form-signup" v-show="showRegistration">
+        <form class="form-signup" v-show="showRegistration && !showlogin">
           <input type="text" name="name" id="firstname" placeholder="First Name" required>
           <input type="text" name="name" id="lastname" placeholder="Last Name" required>
           <input type="email" name="email" id="emailaddress" placeholder="Email Address" required>
@@ -297,8 +297,4 @@ button:hover {
       margin-top: 30px;
     }
 }
-
-
-
-
 </style>
