@@ -1,71 +1,45 @@
 <template>
-  <div id="login" class="text-center">
-    <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Yinz Gotta Sign In</h1>
-      <div
-        class="alert alert-danger"
-        role="alert"
-        v-if="invalidCredentials"
-      >Quit jaggin off! Invalid username and password!</div>
-      <div
-        class="alert alert-success"
-        role="alert"
-        v-if="this.$route.query.registration"
-      >Thank Yinz for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
-      <input
-        type="text"
-        id="username"
-        class="form-control"
-        placeholder="Username"
-        v-model="user.username"
-        required
-        autofocus
-      />
-      <label for="password" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="password"
-        class="form-control"
-        placeholder="Password"
-        v-model="user.password"
-        required
-      />
-      <router-link :to="{ name: 'register' }">Yinz need an account?</router-link>
-      <button type="submit">Sign in</button>
-    </form>
 
-    
+<div class = "landing-page">
+    <div class="left-div">
+      <div class="logo">
+        <h1>restaurant tinder</h1>
+        <i class="fas fa-fire fa-3x"></i>
+        <div id="registration-form">
+        <form class="form-signup" v-show="showRegistration && !showlogin" @submit.prevent="register">
+          <input type="text" name="name" id="firstname" placeholder="First Name" required>
+          <input type="text" name="name" id="lastname" placeholder="Last Name" required>
+          <input type="email" name="email" id="emailaddress" placeholder="Email Address" required>
+          <input type="number" name="phone" id="phone-number" placeholder="Phone Number">
+          <input type="password" name="password" id="password" placeholder="Password" required>
+          <input type="password" name="password" id="confirm-password" placeholder="Password" required>
+          <input type="text" name="address" id="address1" placeholder="Street Address">
+          <input type="text" name="address" id="address2" placeholder="Street Address 2">
+          <input type="text" name="city" id="city" placeholder="City">
+          <input type="text" name="state" id="state" placeholder="State/Province">
+          <input type="number" name="zipcode" id="zipcode" placeholder="Zip Code" required>
+          <input type="text" name="country" id="Country" placeholder="Country">
+          <button action="submit" id="">Register</button>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="right-div">
+        <a v-on:click="showlogin = ! showlogin" id="login" v-show="!showlogin">Sign in</a>
+        <a v-on:click="showlogin = ! showlogin" id="registeroption" v-show="showlogin">Don't have an account? Sign up!</a>
+        
+        <form class="form-signin" @submit.prevent="login" v-show="showlogin">
+          <input type="email" id="username" placeholder="email address">
+          <input type="password" id="password" placeholder="password">
+          <button action="submit" type="submit" id="signin">Sign in</button>
+        </form>
 
-    
-    <section class="section">
-			<div class="container">
-				<div class="columns">
-					<div class="column">
-            <div class ="notification is-info">
-						R Yinz Hungry?!
-            <p>
-              ᕕ( ᐛ )ᕗ
-            </p> 
-            </div>
-					</div>
-					<div class="column">
-            <div class ="notification is-warning">
-					<p>Can't find the PERFECT spot to eat?! </p>	
-            <p> ⦤(^ー^)⦥ </p>
-
-          </div>
-					</div>
-					<div class="column">
-            <div class ="notification is-primary">
-								Restaurant-Tinder™ TIME! 
-                <p>٩(^ᴗ^)۶</p>
-              </div>
-					</div>
-				</div>
-			</div>
-		</section>
-  </div>
+        <div class="register" v-show="!showlogin">
+        <h2>Register to start swiping and find your perfect tasty match <i class="fas fa-fire"></i></h2>
+        <button id="register" action="submit" v-show="! showRegistration" v-on:click="showRegistration = ! showRegistration">Register</button>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -80,7 +54,9 @@ export default {
         username: "",
         password: ""
       },
-      invalidCredentials: false
+      invalidCredentials: false,
+      showlogin: false,
+      showRegistration: false
     };
   },
   methods: {
@@ -101,13 +77,38 @@ export default {
             this.invalidCredentials = true;
           }
         });
+    },
+    register() {
+      if (this.user.password != this.user.confirmPassword) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+      } else {
+        authService
+          .register(this.user)
+          .then((response) => {
+            if (response.status == 201) {
+              this.$router.push({
+                path: '/login',
+                query: { registration: 'success' },
+              });
+            }
+          })
+          .catch((error) => {
+            const response = error.response;
+            this.registrationErrors = true;
+            if (response.status === 400) {
+              this.registrationErrorMsg = 'Bad Request: Validation Errors';
+            }
+          });
+      }
     }
   }
 };
 </script>
+
 <style scoped>
 
-body {
+.landing-page {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     min-width: 100%;
@@ -115,10 +116,46 @@ body {
     padding: 0;
 }
 .left-div {
-    background-image: url("/java-final-capstone-team-6/frontend/public/images/edgar-castrejon-1SPu0KT-Ejg-unsplash.jpg");
+    background-image: url("https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGZvb2R8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");
     height: 100vh;
     background-size: cover;
 }
+
+.right-div {
+  text-align: center;
+}
+
+.right-div > h2 {
+  text-align: left;
+}
+
+.form-signin {
+  margin-top: 100px;
+}
+
+.form-signin input {
+    padding:0.5em 3em;
+    margin:0 0.3em 0.3em 0;
+    font-family:'Roboto',sans-serif;
+    font-size: 1.2rem;
+}
+
+.form-signup {
+  margin-top: 70px
+}
+
+.form-signup input {
+    padding:0.3em 3em;
+    margin:0 0.3em 0.3em 0;
+    font-family:'Roboto',sans-serif;
+    font-size: 1rem;
+}
+
+#registration-form {
+  text-align: center;
+}
+
+
 h1 {
     font-family: 'Acme', sans-serif;
     display: inline;
@@ -132,22 +169,20 @@ h1 {
     padding-left: 50px;
     padding-top: 25px;
 }
-.right-div {
-  align-items: center;
-}
+
 h2 {
     font-family: 'Acme', sans-serif;
     font-size: 2rem;
-    margin-left: 25px;
     margin-top: 200px;
 }
 button {
     display:inline-block;
-    padding:0.5em 3em;
+    margin: 25px;
+        padding: 0.8rem 8.3rem;
     border: 0.16em solid rgb(237, 93, 77);
     border-radius: 6px;
     background-color: rgb(237, 93, 77);
-    margin:0 0.3em 0.3em 0;
+    
     box-sizing: border-box;
     text-decoration:none;
     text-transform:uppercase;
@@ -161,6 +196,7 @@ button:hover {
     background-color:rgb(211, 82, 67);
     border-color: rgb(211, 82, 67);
 }
+
 #email {
     margin-left: 25px;
     font-size: 1.33rem;
@@ -170,7 +206,7 @@ button:hover {
     font-family: 'Roboto', sans-serif;
     text-align: center;
 }
-#login {
+#login, #registeroption {
     display: block;
     text-align: right;
     color: rgb(237, 93, 77);
@@ -180,29 +216,24 @@ button:hover {
     margin-top: 15px;
     margin-right: 20px;
 }
-#login:hover {
+#login:hover, #registeroption:hover {
     text-decoration: underline;
 }
 @media only screen and (max-width: 1400px){
     button {
-        display: block;
         margin: 25px;
         padding: 0.8rem 8.3rem;
     }
-    #email {
-        display: block;
-        margin: 25px;
-    }
 }
 @media only screen and (max-width: 881px) {
-    body {
+    .landing-page {
         grid-template-columns: 1fr;
     }
     .logo {
         margin-top: 40px;
         position: absolute;
     }
-    #login {
+    #login, #registeroption {
         position: absolute;
         top: 5px;
         right: 2px;
@@ -210,9 +241,16 @@ button:hover {
     h2 {
         margin-top: 20px;
     }
+
+    .form-signin {
+      position: absolute;
+      top: 200px;
+      right: 50px;
+      left: 50px;
+    }
+
+    .form-signup {
+      margin-top: 30px;
+    }
 }
-
-
-
-
 </style>

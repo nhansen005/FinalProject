@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      <!-- <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link> -->
     <router-view />
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style>
-
+/* 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,5 +26,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 20px;
-}
+} */
 </style>
