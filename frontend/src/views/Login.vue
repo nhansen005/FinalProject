@@ -7,12 +7,15 @@
         <i class="fas fa-fire fa-3x"></i>
         <div id="registration-form">
         <form class="form-signup" v-show="showRegistration && !showlogin" @submit.prevent="register">
-          <input type="text" name="name" id="firstname" placeholder="First Name" required>
-          <input type="text" name="name" id="lastname" placeholder="Last Name" required>
-          <input type="email" name="email" id="emailaddress" placeholder="Email Address" required>
+          <h2 v-class="error-message" v-if="registrationErrors">
+        {{ registrationErrorMsg }}
+      </h2>
+          <input type="text" name="name" id="firstname" placeholder="First Name" >
+          <input type="text" name="name" id="lastname" placeholder="Last Name" >
+          <input type="text" name="username" id="username" placeholder="Username" v-model="newUser.username" required>
           <input type="number" name="phone" id="phone-number" placeholder="Phone Number">
-          <input type="password" name="password" id="password" placeholder="Password" required>
-          <input type="password" name="password" id="confirm-password" placeholder="Password" required>
+          <input type="password" name="password" id="enter-password" placeholder="Password" v-model="newUser.password" required>
+          <input type="password" name="password" id="confirm-password" placeholder="Confirm Password" v-model="newUser.confirmPassword" required>
           <input type="text" name="address" id="address1" placeholder="Street Address">
           <input type="text" name="address" id="address2" placeholder="Street Address 2">
           <input type="text" name="city" id="city" placeholder="City">
@@ -29,8 +32,8 @@
         <a v-on:click="showlogin = ! showlogin" id="registeroption" v-show="showlogin">Don't have an account? Sign up!</a>
         
         <form class="form-signin" @submit.prevent="login" v-show="showlogin">
-          <input type="email" id="username" placeholder="email address">
-          <input type="password" id="password" placeholder="password">
+          <input type="text" id="username" placeholder="username" v-model="existingUser.username">
+          <input type="password" id="password" placeholder="password" v-model="existingUser.password">
           <button action="submit" type="submit" id="signin">Sign in</button>
         </form>
 
@@ -50,11 +53,19 @@ export default {
   components: {},
   data() {
     return {
-      user: {
+      existingUser: {
         username: "",
         password: ""
       },
       invalidCredentials: false,
+      newUser: {
+        username: '',
+        password: '',
+        confirmPassword: '',
+        role: 'user',
+      },
+      registrationErrors: false,
+      registrationErrorMsg: 'There were problems registering this user.',
       showlogin: false,
       showRegistration: false
     };
@@ -62,7 +73,7 @@ export default {
   methods: {
     login() {
       authService
-        .login(this.user)
+        .login(this.existingUser)
         .then(response => {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
@@ -79,12 +90,12 @@ export default {
         });
     },
     register() {
-      if (this.user.password != this.user.confirmPassword) {
+      if (this.newUser.password != this.newUser.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
       } else {
         authService
-          .register(this.user)
+          .register(this.newUser)
           .then((response) => {
             if (response.status == 201) {
               this.$router.push({
@@ -101,8 +112,12 @@ export default {
             }
           });
       }
-    }
-  }
+    },
+    clearErrors() {
+      this.registrationErrors = false;
+      this.registrationErrorMsg = 'There were problems registering this user.';
+    },
+  },
 };
 </script>
 
