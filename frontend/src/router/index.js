@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import HereMap from '../components/HereMap.vue'
 import QuestionForm from '../components/QuestionForm.vue'
+import Favorites from '../views/Favorites.vue'
 
 Vue.use(Router)
 
