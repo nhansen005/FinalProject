@@ -10,6 +10,7 @@ public class User {
 
    private Long id;
    private String username;
+   private int zipcode;
    @JsonIgnore
    private String password;
    @JsonIgnore
@@ -18,10 +19,11 @@ public class User {
 
    public User() { }
 
-   public User(Long id, String username, String password, String authorities) {
+   public User(Long id, String username, String password, String authorities, int zipcode) {
       this.id = id;
       this.username = username;
       this.password = password;
+      this.zipcode = zipcode;
       this.activated = true;
    }
 
@@ -48,6 +50,10 @@ public class User {
    public void setPassword(String password) {
       this.password = password;
    }
+
+   public int getZipcode() { return zipcode; }
+
+   public void setZipcode(int zipcode) { this.zipcode = zipcode; }
 
    public boolean isActivated() {
       return activated;

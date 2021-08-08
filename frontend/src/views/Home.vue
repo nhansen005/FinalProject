@@ -1,26 +1,44 @@
 <template>
-    <div>
-        <div class="restaurant">
-        </div>
-
+<div>
+    <h1> This is the homepage! </h1>
+    <input type="text" v-model="zipCode">
+     <input type="text" v-model="category">
+    <button v-on:click="search"> Submit </button>
+        <!-- <p> {{ restaurants }} </p> -->
+        <ul>
+            <li v-for="item in restaurants" :key="item.id">
+                {{ item.name }} ({{item.location.display_address[1]}})
+                <img :src="item.image_url" alt="Image Not Available">
+            </li>
+        </ul>
     </div>
 </template>
-
 <script>
 import tinderService from '../services/TinderService';
-
 export default {
   name: "home",
   data() {
       return {
-      restaurants: []
+      restaurants: [],
+      zipCode: "",
+      category: ""
       };
   },
   created() {
-    tinderService.getRestaurant().then(response => {
+    tinderService.getRestaurantsNoRadius().then(response => {
       this.restaurants = response.data;
+      console.log("Here is the response", response.data)
     });
   },
+  methods: {
+      search() {
+        console.log("ran");
+        tinderService.getRestaurantsWithRadius(this.zipCode, this.category, 40000).then(response => {
+          this.restaurants = response.data;
+          console.log("Here is the response", response.data)
+        });
+      }
+  }
 };
 </script>
 
@@ -41,7 +59,7 @@ body {
 h1 {
     font-family: 'Acme', sans-serif;
     display: inline;
-    color: white;
+    color: black;
     font-size: 3.5rem;
 }
 .fa-fire {

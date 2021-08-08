@@ -19,12 +19,12 @@ public class YelpContoller {
     }
 
     @RequestMapping(path = "/businesses", method = RequestMethod.GET)
-    public Business[] getBusinesses(@RequestHeader String zipcCode, @RequestHeader String category, @RequestHeader String radius) {
+    public Business[] getBusinesses(@RequestHeader String zipCode, @RequestHeader String category, @RequestHeader String radius) {
         List<Business> businessList = null;
         if(radius.equals("")) {
-            businessList = yelpService.getBusinessesNoRadius(zipcCode, category);
+            businessList = yelpService.getBusinessesNoRadius(zipCode, category);
         } else {
-            businessList = yelpService.getBusinessesWithRadius(zipcCode, category, radius);
+            businessList = yelpService.getBusinessesWithRadius(zipCode, category, radius);
         }
         Business[] businessArray = new Business[businessList.size()];
         return businessList.toArray(businessArray);

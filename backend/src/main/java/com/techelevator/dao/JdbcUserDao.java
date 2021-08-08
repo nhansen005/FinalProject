@@ -27,7 +27,7 @@ public class JdbcUserDao implements UserDao {
         return jdbcTemplate.queryForObject("select user_id from users where username = ?", int.class, username);
     }
 
-	@Override
+    @Override
 	public User getUserById(Long userId) {
 		String sql = "SELECT * FROM users WHERE user_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
@@ -63,11 +63,11 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public boolean create(String username, String password, String role) {
+    public boolean create(String username, String password, String role, int zipcode) {
         boolean userCreated = false;
 
         // create user
-        String insertUser = "insert into users (username,password_hash,role) values(?,?,?)";
+        String insertUser = "insert into users (username,password_hash,zipcode,role) values(?,?,?,?)";
         String password_hash = new BCryptPasswordEncoder().encode(password);
         String ssRole = "ROLE_" + role.toUpperCase();
 
@@ -77,7 +77,8 @@ public class JdbcUserDao implements UserDao {
                     PreparedStatement ps = con.prepareStatement(insertUser, new String[]{id_column});
                     ps.setString(1, username);
                     ps.setString(2, password_hash);
-                    ps.setString(3, ssRole);
+                    ps.setInt(3, zipcode);
+                    ps.setString(4, ssRole);
                     return ps;
                 }
                 , keyHolder) == 1;
@@ -91,6 +92,7 @@ public class JdbcUserDao implements UserDao {
         user.setId(rs.getLong("user_id"));
         user.setUsername(rs.getString("username"));
         user.setPassword(rs.getString("password_hash"));
+        user.setZipcode(rs.getInt("zipcode"));
         user.setAuthorities(rs.getString("role"));
         user.setActivated(true);
         return user;
