@@ -3,7 +3,7 @@
 <div class = "landing-page">
     <div class="left-div">
       <div class="logo">
-        <h1>restaurant tinder</h1>
+        <h1>chicken tinder</h1>
         <i class="fas fa-fire fa-3x"></i>
         <div id="registration-form">
         <form class="form-signup" v-show="showRegistration && !showlogin" @submit.prevent="register">

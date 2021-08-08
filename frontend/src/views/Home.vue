@@ -1,16 +1,30 @@
 <template>
 <div>
-    <h1> This is the homepage! </h1>
-    <input type="text" v-model="zipCode">
-     <input type="text" v-model="category">
-    <button v-on:click="search"> Submit </button>
-        <!-- <p> {{ restaurants }} </p> -->
-        <ul>
+    <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
+    <!-- <input type="text" v-model="zipCode">
+    <input type="text" v-model="category"> -->
+    <!-- <button v-on:click="search"> Submit </button> -->
+    <div class="restaurant-card">
+        <div class="restaurant-info">
+        <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
+        <br>
+        <ul v-for="category in restaurants[0].categories" :key="category.title"><li class="categories">{{ category.title }} </li></ul>
+        <br>
+        <span class="average-rating"> Average rating: {{ restaurants[0].rating }}/5 ({{ restaurants[0].review_count  }} reviews)</span>
+
+        <p v-if="restaurants[0].price != null" class="restaurant-price"> {{restaurants[0].price}}</p>
+        <br>
+        </div>
+        <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
+    </div>
+
+    <button v-on:click="like">LIKE</button>
+        <!-- <ul>
             <li v-for="item in restaurants" :key="item.id">
                 {{ item.name }} ({{item.location.display_address[1]}})
                 <img :src="item.image_url" alt="Image Not Available">
             </li>
-        </ul>
+        </ul> -->
     </div>
 </template>
 <script>
@@ -20,7 +34,7 @@ export default {
   data() {
       return {
       restaurants: [],
-      zipCode: "",
+      zipCode: this.$store.state.user.zipCode,
       category: ""
       };
   },
@@ -37,6 +51,11 @@ export default {
           this.restaurants = response.data;
           console.log("Here is the response", response.data)
         });
+      },
+      like() {
+        console.log("Okay at least this part works");
+        this.$store.state.favorites.push(this.restaurants[0]);
+        this.restaurants.shift(this.restaurants[0]); 
       }
   }
 };
@@ -45,17 +64,11 @@ export default {
 <style scoped>
 
 body {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
     min-width: 100%;
     margin: 0;
     padding: 0;
 }
-.left-div {
-    background-image: url("https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80");
-    height: 100vh;
-    background-size: cover;
-}
+
 h1 {
     font-family: 'Acme', sans-serif;
     display: inline;
@@ -65,18 +78,63 @@ h1 {
 .fa-fire {
     color: rgb(237, 93, 77);
 }
-.logo {
-    padding-left: 50px;
-    padding-top: 25px;
+
+.restaurant-card {
+    border: 5px solid black;
+    margin: 0 auto;
+    padding: 0;
+    width: 75vw;
+    height: 80vh;
 }
-.right-div {
-  align-items: center;
+
+.restaurant-pic {
+    width: 100%;
+    height: 100%
 }
-h2 {
-    font-family: 'Acme', sans-serif;
+
+ul {
+    display: inline;
+}
+
+.categories {
+    font-family: 'Roboto', sans-serif;
+    display: inline;
+    background: rgba(198, 242, 244, 0.6);
+    padding: 5px;
+    border-radius: 10px;
+}
+.restaurant-name {
+    font-family: 'Roboto', sans-serif;
     font-size: 2rem;
-    margin-left: 25px;
-    margin-top: 200px;
+    margin-left: 40px;
+    background: rgba(237, 144, 134, 0.6);
+    padding: 5px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.average-rating {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    background: rgba(247, 228, 154, 0.6);
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.restaurant-price {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    background: rgba(154, 247, 157, 0.6);
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.restaurant-info {
+    position: absolute;
 }
 button {
     display:inline-block;
@@ -98,34 +156,13 @@ button:hover {
     background-color:rgb(211, 82, 67);
     border-color: rgb(211, 82, 67);
 }
-#email {
-    margin-left: 25px;
-    font-size: 1.33rem;
-    padding:0.5em 3em;
-    border: 0.05em solid gray;
-    border-radius: 6px;
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-}
 
   .btns{
     display: flex;
     align-content: center;
       
     }
-#login {
-    display: block;
-    text-align: right;
-    color: rgb(237, 93, 77);
-    text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
-    margin-top: 15px;
-    margin-right: 20px;
-}
-#login:hover {
-    text-decoration: underline;
-}
+
 @media only screen and (max-width: 1400px){
     button {
         display: block;
