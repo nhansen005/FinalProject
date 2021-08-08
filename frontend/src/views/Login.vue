@@ -20,7 +20,7 @@
           <input type="text" name="address" id="address2" placeholder="Street Address 2">
           <input type="text" name="city" id="city" placeholder="City">
           <input type="text" name="state" id="state" placeholder="State/Province">
-          <input type="number" name="zipcode" id="zipcode" placeholder="Zip Code" required>
+          <input type="number" name="zipcode" id="zipcode" placeholder="Zip Code" v-model="newUser.zipcode" required>
           <input type="text" name="country" id="Country" placeholder="Country">
           <button action="submit" id="">Register</button>
         </form>
@@ -62,6 +62,7 @@ export default {
         username: '',
         password: '',
         confirmPassword: '',
+        zipcode: '',
         role: 'user',
       },
       registrationErrors: false,

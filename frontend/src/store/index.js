@@ -18,6 +18,7 @@ if(currentToken != null) {
 
 export default new Vuex.Store({
   state: {
+    businesses: [],
     token: currentToken || '',
     user: currentUser || {}
   },
@@ -37,6 +38,9 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    SET_RESTAURANTS(state, data) {
+        state.restaurants = data;
     }
   }
 })

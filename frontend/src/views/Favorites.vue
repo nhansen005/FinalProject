@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <img id="gif" v-if="isLoading" src="../assets/loadingImg.gif" />
+    <!-- <img id="gif" v-if="isLoading" src="../assets/loadingImg.gif" /> -->
     <div id="header">
         <div id="review">Powered by</div>  
         <a id="link" href="https://www.yelp.com/" target="_blank">
-          <img id="yelpLogo" src="@/assets/yelpLogo.png"/> 
+          <!-- <img id="yelpLogo" src="@/assets/yelpLogo.png"/>  -->
         </a>
     </div> 
-    <business-summary :restaurant="r" :key="r.id" v-for="r in theRestaurants"/>  
+    <!-- <business-summary :restaurant="r" :key="r.id" v-for="r in theRestaurants"/>   -->
   </div>  
 </template>
 <script>
@@ -20,7 +20,7 @@ export default {
    }
   },
   components: {
-    BusinessSummary
+    // BusinessSummary
   },
   computed: {
     theRestaurants() {
@@ -60,7 +60,7 @@ export default {
   text-shadow: 5px 5px black;
 }
 #app {
-  background-image: url(../assets/coffee.jpg);
+  /* background-image: url(../assets/coffee.jpg); */
   display: flex;
   flex-wrap: wrap;
   background-size: cover;
