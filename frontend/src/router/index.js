@@ -8,6 +8,7 @@ import store from '../store/index'
 import HereMap from '../components/HereMap.vue'
 import QuestionForm from '../components/QuestionForm.vue'
 import Favorites from '../views/Favorites.vue'
+import BusinessCard from '../views/BusinessCard.vue'
 
 Vue.use(Router)
 
@@ -71,6 +72,26 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/favorites",
+      name: "Favorites",
+      component: Favorites,
+      meta: {
+        requiresAuth: true
+      }
+
+
+    },
+
+    {
+      path: "/tindies",
+      name: "BusinessCard",
+      component: BusinessCard,
+      meta: {
+        requiresAuth: true
+      }
+
     }
   ]
 })

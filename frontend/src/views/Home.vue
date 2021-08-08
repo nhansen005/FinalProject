@@ -1,8 +1,9 @@
 <template>
 <div>
     <h1> This is the homepage! </h1>
-    <input type="text" v-model="zipCode">
-     <input type="text" v-model="category">
+    
+    <input type="text" v-model="zipCode"> Please Enter the Zip Code
+     <input type="text" v-model="category"> Please Enter the Category
     <button v-on:click="search"> Submit </button>
         <!-- <p> {{ restaurants }} </p> -->
         <ul>
@@ -31,13 +32,13 @@ export default {
     });
   },
   methods: {
-      search() {
-        console.log("ran");
-        tinderService.getRestaurantsWithRadius(this.zipCode, this.category, 40000).then(response => {
-          this.restaurants = response.data;
-          console.log("Here is the response", response.data)
-        });
-      }
+    //   search() {
+    //     console.log("ran");
+    //     tinderService.getRestaurantsWithRadius(this.zipCode, this.category, 40000).then(response => {
+    //       this.restaurants = response.data;
+    //       console.log("Here is the response", response.data)
+    //     });
+    //   }
   }
 };
 </script>
