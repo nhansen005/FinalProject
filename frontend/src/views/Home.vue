@@ -29,7 +29,7 @@
             <br>
             <span class="average-rating"> Average rating: {{ restaurants[0].rating }}/5 ({{ restaurants[0].review_count  }} reviews)</span>
             <p v-if="restaurants[0].price != null" class="restaurant-price"> {{restaurants[0].price}}</p>
-            <p>{{ restaurants[0].name }} is located at {{ restaurants[0].location.display_address[0] }}, {{ restaurants[0].location.display_address[1] }}. Their phone number is {{ restaurants[0].display_phone }}.</p>
+            <p class="location">{{ restaurants[0].name }} is located at {{ restaurants[0].location.display_address[0] }}, {{ restaurants[0].location.display_address[1] }}. Their phone number is {{ restaurants[0].display_phone }}.</p>
             <br>
         </div>
         <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
@@ -47,7 +47,7 @@ export default {
       zipCode: this.$store.state.user.zipcode,
       category: "",
       showDetails: false,
-      currentRestaurant: [],
+      currentRestaurant: {},
       };
   },
   created() {
@@ -55,7 +55,7 @@ export default {
       this.restaurants = response.data;
       console.log("Here is the response", response.data)
     });
-},
+  },
   methods: {
       search() {
         console.log("ran");
@@ -142,6 +142,16 @@ h1 {
     padding: 0;
     width: 50vw;
     height: 75vh;
+}
+
+.location {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    background: rgba(247, 154, 244, 0.7);
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 40px;
 }
 
 .restaurant-pic {
