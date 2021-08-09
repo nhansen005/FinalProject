@@ -1,6 +1,7 @@
 <template>
 <div>
     <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
+    <p>{{ this.$store.state.user.zipcode}}</p>
     <!-- <input type="text" v-model="zipCode">
     <input type="text" v-model="category"> -->
     <!-- <button v-on:click="search"> Submit </button> -->
@@ -18,7 +19,9 @@
         <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
     </div>
 
-    <button v-on:click="like">LIKE</button>
+    <div class="like" v-on:click="like"><i class="fas fa-heart fa-5x"></i></div>
+    <div class="dislike" v-on:click="dislike"><i class="fas fa-times-circle fa-5x"></i></div>
+    
         <!-- <ul>
             <li v-for="item in restaurants" :key="item.id">
                 {{ item.name }} ({{item.location.display_address[1]}})
@@ -34,20 +37,20 @@ export default {
   data() {
       return {
       restaurants: [],
-      zipCode: this.$store.state.user.zipCode,
+      zipCode: this.$store.state.user.zipcode,
       category: ""
       };
   },
   created() {
-    tinderService.getRestaurantsNoRadius().then(response => {
+    tinderService.getRestaurantsNoRadius(this.$store.state.user.zipcode, "").then(response => {
       this.restaurants = response.data;
       console.log("Here is the response", response.data)
-    });
-  },
+        });
+    },
   methods: {
       search() {
         console.log("ran");
-        tinderService.getRestaurantsWithRadius(this.zipCode, this.category, 40000).then(response => {
+        tinderService.getRestaurantsWithRadius(this.$store.state.user.zipcode, this.category, 40000).then(response => {
           this.restaurants = response.data;
           console.log("Here is the response", response.data)
         });
@@ -56,6 +59,9 @@ export default {
         console.log("Okay at least this part works");
         this.$store.state.favorites.push(this.restaurants[0]);
         this.restaurants.shift(this.restaurants[0]); 
+      },
+      dislike() {
+        this.restaurants.shift(this.restaurants[0]);  
       }
   }
 };
@@ -79,17 +85,38 @@ h1 {
     color: rgb(237, 93, 77);
 }
 
+.fa-heart {
+    color: rgb(70, 174, 70);
+}
+
+.fa-times-circle {
+    color: rgb(237, 93, 77);
+}
+
+.like {
+  position: fixed;
+  right: 10vw;
+  top: 45vh;
+}
+
+.dislike {
+  position: fixed;
+  left: 10vw;
+  top: 45vh;
+}
+
 .restaurant-card {
     border: 5px solid black;
     margin: 0 auto;
     padding: 0;
-    width: 75vw;
-    height: 80vh;
+    width: 50vw;
+    height: 75vh;
 }
 
 .restaurant-pic {
     width: 100%;
-    height: 100%
+    height: 100%;
+    object-fit: cover;
 }
 
 ul {
@@ -99,34 +126,52 @@ ul {
 .categories {
     font-family: 'Roboto', sans-serif;
     display: inline;
-    background: rgba(198, 242, 244, 0.6);
+    background: rgba(198, 242, 244, 0.7);
     padding: 5px;
     border-radius: 10px;
+    transition: .5s;
+}
+
+.categories:hover {
+    background: rgba(198, 242, 244, 0.8);
+    transition: .5s;
 }
 .restaurant-name {
     font-family: 'Roboto', sans-serif;
     font-size: 2rem;
     margin-left: 40px;
-    background: rgba(237, 144, 134, 0.6);
+    background: rgba(237, 144, 134, 0.7);
     padding: 5px;
     border-radius: 10px;
     display: inline-block;
+    transition: .5s;
+}
+
+.restaurant-name:hover {
+    background: rgba(237, 144, 134, 0.8);
+    transition: .5s;
 }
 
 .average-rating {
     font-family: 'Roboto', sans-serif;
     display: inline-block;
-    background: rgba(247, 228, 154, 0.6);
+    background: rgba(247, 228, 154, 0.7);
     padding: 5px;
     border-radius: 10px;
     margin-top: 20px;
     margin-left: 40px;
+    transition: .5s;
+}
+
+.average-rating:hover {
+    background: rgba(247, 228, 154, 0.8);
+    transition: .5s;
 }
 
 .restaurant-price {
     font-family: 'Roboto', sans-serif;
     display: inline-block;
-    background: rgba(154, 247, 157, 0.6);
+    background: rgba(154, 247, 157, 0.7);
     padding: 5px;
     border-radius: 10px;
     margin-top: 20px;
@@ -136,26 +181,6 @@ ul {
 .restaurant-info {
     position: absolute;
 }
-button {
-    display:inline-block;
-    padding:0.5em 3em;
-    border: 0.16em solid rgb(237, 93, 77);
-    border-radius: 6px;
-    background-color: rgb(237, 93, 77);
-    margin:0 0.3em 0.3em 0;
-    box-sizing: border-box;
-    text-decoration:none;
-    text-transform:uppercase;
-    font-family:'Roboto',sans-serif;
-    font-size: 1.2rem;
-    color:rgb(255, 255, 255);
-    text-align:center;
-    transition: all 0.15s;
-}
-button:hover {
-    background-color:rgb(211, 82, 67);
-    border-color: rgb(211, 82, 67);
-}
 
   .btns{
     display: flex;
@@ -164,34 +189,5 @@ button:hover {
     }
 
 @media only screen and (max-width: 1400px){
-    button {
-        display: block;
-        margin: 25px;
-        padding: 0.8rem 8.3rem;
-    }
-    #email {
-        display: block;
-        margin: 25px;
-    }
 }
-@media only screen and (max-width: 881px) {
-    body {
-        grid-template-columns: 1fr;
-    }
-    .logo {
-        margin-top: 40px;
-        position: absolute;
-    }
-    #login {
-        position: absolute;
-        top: 5px;
-        right: 2px;
-    }
-    h2 {
-        margin-top: 20px;
-    }
-
-  
-}
-
-</style>
+    </style>
