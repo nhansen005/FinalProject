@@ -1,20 +1,19 @@
 <template>
 <div>
     <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
-    <p>{{ this.$store.state.user.zipcode}}</p>
     <!-- <input type="text" v-model="zipCode">
     <input type="text" v-model="category"> -->
     <!-- <button v-on:click="search"> Submit </button> -->
-    <div class="restaurant-card">
+    <div class="restaurant-card" v-on:click="viewRestaurantDetails" v-show="!showDetails">
         <div class="restaurant-info">
-        <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
-        <br>
-        <ul v-for="category in restaurants[0].categories" :key="category.title"><li class="categories">{{ category.title }} </li></ul>
-        <br>
-        <span class="average-rating"> Average rating: {{ restaurants[0].rating }}/5 ({{ restaurants[0].review_count  }} reviews)</span>
+            <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
+            <br>
+            <ul v-for="category in restaurants[0].categories" :key="category.title"><li class="categories">{{ category.title }} </li></ul>
+            <br>
+            <span class="average-rating"> Average rating: {{ restaurants[0].rating }}/5 ({{ restaurants[0].review_count  }} reviews)</span>
 
-        <p v-if="restaurants[0].price != null" class="restaurant-price"> {{restaurants[0].price}}</p>
-        <br>
+            <p v-if="restaurants[0].price != null" class="restaurant-price"> {{restaurants[0].price}}</p>
+            <br>
         </div>
         <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
     </div>
@@ -22,12 +21,20 @@
     <div class="like" v-on:click="like"><i class="fas fa-heart fa-5x"></i></div>
     <div class="dislike" v-on:click="dislike"><i class="fas fa-times-circle fa-5x"></i></div>
     
-        <!-- <ul>
-            <li v-for="item in restaurants" :key="item.id">
-                {{ item.name }} ({{item.location.display_address[1]}})
-                <img :src="item.image_url" alt="Image Not Available">
-            </li>
-        </ul> -->
+    <div class="restaurant-details" v-show="showDetails">
+          <div class="restaurant-info restaurant-detailed-info">
+            <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
+            <br>
+            <ul v-for="category in restaurants[0].categories" :key="category.title"><li class="categories">{{ category.title }} </li></ul>
+            <br>
+            <span class="average-rating"> Average rating: {{ restaurants[0].rating }}/5 ({{ restaurants[0].review_count  }} reviews)</span>
+            <p v-if="restaurants[0].price != null" class="restaurant-price"> {{restaurants[0].price}}</p>
+            <p>{{ restaurants[0].name }} is located at {{ restaurants[0].location.display_address[0] }}, {{ restaurants[0].location.display_address[1] }}. Their phone number is {{ restaurants[0].display_phone }}.</p>
+            <br>
+        </div>
+        <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
+    </div>
+
     </div>
 </template>
 <script>
@@ -38,15 +45,17 @@ export default {
       return {
       restaurants: [],
       zipCode: this.$store.state.user.zipcode,
-      category: ""
+      category: "",
+      showDetails: false,
+      currentRestaurant: [],
       };
   },
   created() {
     tinderService.getRestaurantsNoRadius(this.$store.state.user.zipcode, "").then(response => {
       this.restaurants = response.data;
       console.log("Here is the response", response.data)
-        });
-    },
+    });
+},
   methods: {
       search() {
         console.log("ran");
@@ -57,11 +66,17 @@ export default {
       },
       like() {
         console.log("Okay at least this part works");
-        this.$store.state.favorites.push(this.restaurants[0]);
+        tinderService.addFavorites(this.restaurants[0].id);
         this.restaurants.shift(this.restaurants[0]); 
       },
       dislike() {
         this.restaurants.shift(this.restaurants[0]);  
+      },
+      viewRestaurantDetails() {
+        this.showDetails = true;
+        tinderService.getBusinessByID(this.restaurants[0].id).then(response => {
+            this.currentRestaurant = response.data;
+        }); 
       }
   }
 };
@@ -107,6 +122,22 @@ h1 {
 
 .restaurant-card {
     border: 5px solid black;
+    margin: 0 auto;
+    padding: 0;
+    width: 50vw;
+    height: 75vh;
+}
+
+.restaurant-details {
+   border: 5px solid black;
+    margin: 0 auto;
+    padding: 0;
+    width: 50vw;
+    height: 75vh;
+}
+
+.restaurant-detailed-info {
+    background-color: rgba(255, 235, 239, 0.591);
     margin: 0 auto;
     padding: 0;
     width: 50vw;
