@@ -1,17 +1,74 @@
 <template>
-<div>
-    <h1> This is the homepage! </h1>
+<div class="swipe-page">
+    <nav>
+        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'favorites' }">Liked Restaurants</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
+    </nav>
+
+    <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
+   
+        <h3 v-on:click="displaySearch = !displaySearch">Custom search</h3>
+        <div class="custom-search" v-show="displaySearch">
+            <input type="text" id="category" v-model="category" placeholder="Cuisine Type">
+            <br>
+            <input type="text" id="cust-location" v-model="customLocation" placeholder="Current Location">
+            <br>
+            <label for="input-range">
+                Searching Range: {{ mile }} Miles
+            </label>
+            <br>
+            <input type="range"
+            max="40000"
+            min="1609"
+            step="3218"
+            id="input-range"
+            v-model="radius">
+            <br>
+            <button id="search" v-on:click="search"> Search </button>
+        </div>
     
-  
-        <!-- <p> {{ restaurants }} </p> -->
-        <ul>
-            <li v-for="item in restaurants" :key="item.id">
-                {{ item.name }} ({{item.location.display_address[1]}})
-                <img :src="item.image_url" alt="Image Not Available">
-            </li>
-        </ul>
+
+    <div class="restaurant-card" v-on:click="viewRestaurantDetails" v-show="!showDetails">
+        <div class="restaurant-info">
+            <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
+            <br>
+            <ul v-for="category in restaurants[0].categories" :key="category.title">
+                <li class="categories">{{ category.title }} </li>
+            </ul>
+        </div>
+        <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
     </div>
+
+    <div class="like" v-on:click="like"><i class="fas fa-heart fa-5x"></i></div>
+    <div class="dislike" v-on:click="dislike"><i class="fas fa-times-circle fa-5x"></i></div>
+    
+
+    <div class="restaurant-details" v-on:click="viewRestaurantDetails" v-if="showDetails">
+          <div class="restaurant-info restaurant-detailed-info">
+            <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
+            <br>
+            <ul v-for="category in restaurants[0].categories" :key="category.title"><li class="categories">{{ category.title }} </li></ul>
+            <br>
+            <span class="average-rating"> Average rating: {{ restaurants[0].rating }}/5 ({{ restaurants[0].review_count  }} reviews)</span>
+            <p v-if="restaurants[0].price != null" class="restaurant-price"> {{restaurants[0].price}}</p>
+            <p class="location">{{ restaurants[0].name }} is located at {{ restaurants[0].location.display_address[0] }}, {{ restaurants[0].location.display_address[1] }}. Their phone number is {{ restaurants[0].display_phone  }}.</p>
+            <br>
+            <p class="open" v-if="currentRestaurant.hours[0].is_open_now">Currently open</p>
+            <p class="open" v-if="!currentRestaurant.hours[0].is_open_now">Currently closed</p>
+        </div>
+        <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
+    </div>
+
+
+    <div class="show-details-div">
+        <button class="show-details" v-show="!showDetails" v-on:click="viewRestaurantDetails">Restaurant Details</button>
+        <button class="show-details" v-show="showDetails" v-on:click="viewRestaurantDetails">Hide Restaurant Details</button>
+    </div>
+
+</div>
 </template>
+
 <script>
 import tinderService from '../services/TinderService';
 export default {
@@ -19,24 +76,58 @@ export default {
   data() {
       return {
       restaurants: [],
-      zipCode: "",
-      category: ""
+      zipCode: this.$store.state.user.zipcode,
+      customLocation: "",
+      category: "",
+      showDetails: false,
+      currentRestaurant: {},
+      mile: "5",
+      radius: '8000',
+      displaySearch: false,
       };
   },
   created() {
-    tinderService.getRestaurantsNoRadius().then(response => {
+    tinderService.getRestaurantsNoRadius(this.$store.state.user.zipcode, "").then(response => {
       this.restaurants = response.data;
       console.log("Here is the response", response.data)
+    }),
+    tinderService.getBusinessByID(this.restaurants[0].id).then(response => {
+        this.currentRestaurant = response.data;
     });
   },
+  watch: {
+    mile: function (val) {
+      this.mile = val
+      this.radius = val * 1609;
+    },
+    radius: function (val) {
+      this.radius = val,
+      this.mile = val/1609;
+    }
+  },
   methods: {
-    //   search() {
-    //     console.log("ran");
-    //     tinderService.getRestaurantsWithRadius(this.zipCode, this.category, 40000).then(response => {
-    //       this.restaurants = response.data;
-    //       console.log("Here is the response", response.data)
-    //     });
-    //   }
+      search() {
+        console.log("ran");
+        tinderService.getRestaurantsWithRadius(this.customLocation, this.category, this.radius).then(response => {
+          this.restaurants = response.data;
+          console.log("Here is the response", response.data)
+        });
+      },
+      like() {
+        tinderService.addFavorites(this.restaurants[0].id);
+        this.showDetails = false;
+        this.restaurants.shift(this.restaurants[0]); 
+      },
+      dislike() {
+        this.showDetails = false;
+        this.restaurants.shift(this.restaurants[0]);  
+      },
+      viewRestaurantDetails() {
+        this.showDetails = !this.showDetails;
+        tinderService.getBusinessByID(this.restaurants[0].id).then(response => {
+        this.currentRestaurant = response.data;
+    })
+      }
   }
 };
 </script>
@@ -44,47 +135,199 @@ export default {
 <style scoped>
 
 body {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
     min-width: 100%;
     margin: 0;
     padding: 0;
 }
-.left-div {
-    background-image: url("https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80");
-    height: 100vh;
-    background-size: cover;
-}
+
 h1 {
     font-family: 'Acme', sans-serif;
     display: inline;
     color: black;
     font-size: 3.5rem;
 }
+nav {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-family: "Roboto", sans-serif;
+  
+}
+nav a {
+  text-decoration: none;
+  color: rgb(237, 93, 77);
+}
+
 .fa-fire {
     color: rgb(237, 93, 77);
 }
-.logo {
-    padding-left: 50px;
-    padding-top: 25px;
+
+.fa-heart {
+    color: rgb(70, 174, 70);
 }
-.right-div {
-  align-items: center;
+
+.fa-times-circle {
+    color: rgb(237, 93, 77);
 }
-h2 {
-    font-family: 'Acme', sans-serif;
+
+.like {
+  position: fixed;
+  right: 10vw;
+  top: 45vh;
+}
+
+.dislike {
+  position: fixed;
+  left: 10vw;
+  top: 45vh;
+}
+
+.restaurant-card {
+    border: 5px solid black;
+    margin: 0 auto;
+    padding: 0;
+    width: 50vw;
+    height: 75vh;
+}
+
+.restaurant-details {
+    border: 5px solid black;
+    margin: 0 auto;
+    padding: 0;
+    width: 50vw;
+    height: 75vh;
+}
+.restaurant-info {
+    margin: 0 auto;
+    padding: 0;
+    width: 50vw;
+    height: 75vh;
+}
+
+.restaurant-detailed-info {
+    background-color: rgba(36, 35, 35, 0.591);
+   
+}
+
+.location {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.location:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transition: .5s;
+}
+
+.restaurant-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+ul {
+    display: inline;
+}
+
+.categories {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    transition: .5s;
+    max-width: 35vw;
+}
+
+.categories:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transition: .5s;
+}
+.restaurant-name {
+    font-family: 'Roboto', sans-serif;
     font-size: 2rem;
-    margin-left: 25px;
-    margin-top: 200px;
+    margin-left: 40px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 10px;
+    max-width: 35vw;
+    display: inline-block;
+    transition: .5s;
 }
-button {
+
+.restaurant-name:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transition: .5s;
+}
+
+.average-rating {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 40px;
+    transition: .5s;
+    max-width: 35vw;
+}
+
+.open {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 40px;
+    transition: .5s;
+    max-width: 35vw;
+}
+
+.open:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transition: .5s;
+}
+
+.average-rating:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transition: .5s;
+}
+
+.restaurant-price {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.restaurant-price:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transition: .5s;
+}
+
+.restaurant-info {
+    position: absolute;
+}
+
+.show-details {
     display:inline-block;
-    padding:0.5em 3em;
-    border: 0.16em solid rgb(237, 93, 77);
+    margin: 10px;
+    width: 40vw;
+    height: 8vh;
+    border: 0.16em solid rgb(77, 114, 237);
     border-radius: 6px;
-    background-color: rgb(237, 93, 77);
-    margin:0 0.3em 0.3em 0;
-    box-sizing: border-box;
+    background-color: rgb(77, 114, 237);
     text-decoration:none;
     text-transform:uppercase;
     font-family:'Roboto',sans-serif;
@@ -93,67 +336,108 @@ button {
     text-align:center;
     transition: all 0.15s;
 }
-button:hover {
-    background-color:rgb(211, 82, 67);
-    border-color: rgb(211, 82, 67);
-}
-#email {
-    margin-left: 25px;
-    font-size: 1.33rem;
-    padding:0.5em 3em;
-    border: 0.05em solid gray;
-    border-radius: 6px;
-    font-family: 'Roboto', sans-serif;
+
+.show-details-div {
     text-align: center;
 }
+button:hover {
+    background-color:rgb(69, 102, 211);
+    border-color: rgb(69, 102, 211);
+}
 
-  .btns{
-    display: flex;
-    align-content: center;
-      
-    }
-#login {
-    display: block;
-    text-align: right;
+h3 {
+    font-family: "Roboto", sans-serif;
+    position: absolute;
+    right: 50px;
+    top: 25px;
     color: rgb(237, 93, 77);
-    text-decoration: none;
+}
+
+.custom-search {
+    font-family: "Roboto", sans-serif;
+    position: absolute;
+    right: 25px;
+    top: 85px;
+}
+
+#cust-location, #category, #search {
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+}
+
+#cust-location {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+label {
     font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
-    margin-top: 15px;
-    margin-right: 20px;
-}
-#login:hover {
-    text-decoration: underline;
-}
-@media only screen and (max-width: 1400px){
-    button {
-        display: block;
-        margin: 25px;
-        padding: 0.8rem 8.3rem;
-    }
-    #email {
-        display: block;
-        margin: 25px;
-    }
-}
-@media only screen and (max-width: 881px) {
-    body {
-        grid-template-columns: 1fr;
-    }
-    .logo {
-        margin-top: 40px;
-        position: absolute;
-    }
-    #login {
-        position: absolute;
-        top: 5px;
-        right: 2px;
-    }
-    h2 {
-        margin-top: 20px;
-    }
-
-  
 }
 
-</style>
+@media only screen and (max-width: 875px){
+
+.restaurant-card, .restaurant-details, .restaurant-info {
+    width: 75vw;
+}
+
+.show-details {
+    font-size: 1rem;
+    width: 35vw;
+}
+
+.like {
+  position: absolute;
+  top: 87vh;
+  right: 25vw;
+}
+
+.dislike {
+  position: absolute;
+  top: 87vh;
+  left: 25vw;
+}
+
+.fa-heart {
+    font-size: 40px;
+}
+
+.fa-times-circle {
+    font-size: 40px;
+}
+.restaurant-detailed-info .restaurant-name {
+    margin-bottom: 0;
+}
+
+.restaurant-detailed-info .categories {
+    display: none;
+}
+
+
+}
+
+@media only screen and (max-width: 610px){
+
+.restaurant-card, .restaurant-details, .restaurant-info {
+    width: 97vw;
+}
+
+.show-details {
+    display: none;
+}
+
+h1, .fa-fire {
+    margin-top: 40px;
+    font-size: 2rem;
+}
+
+h3 {
+    display: none;
+}
+
+.restaurant-name {
+    max-width: 60vw;
+    font-size: 1.5rem;
+}
+
+}
+    </style>

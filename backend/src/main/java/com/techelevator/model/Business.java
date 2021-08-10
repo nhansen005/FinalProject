@@ -15,6 +15,8 @@ public class Business {
     private BusinessLocation location;
     private String display_phone;
     private String price;
+    private boolean open_now;
+    private Object[] hours;
 
     public String getId() {
         return id;
@@ -94,5 +96,17 @@ public class Business {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public boolean getOpen_now() { return open_now; }
+
+    public void setOpen_now(boolean open_now) { this.open_now = open_now; }
+
+    public Object[] getHours() {
+        return hours;
+    }
+
+    public void setHours(Object[] hours) {
+        this.hours = hours;
     }
 }
