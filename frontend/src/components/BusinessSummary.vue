@@ -78,6 +78,10 @@
       <template v-slot:cell(telephone)="data">
         {{ data.item.display_phone }}
       </template>
+    <template v-slot:cell(remove)>
+        <img src="https://media4.giphy.com/media/sJs1Ag97x0MV2/giphy.gif" href="https://techelevator.com" class="img-thumbnail" />
+      </template>
+
     </b-table>
 
     <div v-else>There's no any restaurant in list now.</div>
@@ -94,7 +98,7 @@ export default {
       zipCode: "",
       category: "",
       mile: "",
-      radius: '',
+      radius: '1609',
 
       fields: [
         { key: "name", sortable: false },
@@ -103,6 +107,7 @@ export default {
         { key: "rating", sortable: true },
         { key: "location", sortable: false },
         { key: "telephone", sortable: false },
+        { key: "remove", sortable: false}
       ],
     };
   },

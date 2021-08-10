@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <img id="gif" v-if="isLoading" src="frontend/public/images/loadingImg.gif" />
+    <img id="gif" v-if="isLoading" src="https://media4.giphy.com/media/sJs1Ag97x0MV2/giphy.gif" />
     <div id="header">
         <div id="review">Powered by</div>  
         <a id="link" href="https://www.yelp.com/" target="_blank">
-          <img id="yelpLogo" src="frontend/public/images/yelpLogo.png"/> 
+          <img id="yelpLogo" src="frontend/public/images/yelpLogo.png" /> 
         </a>
     </div> 
     <business-summary :restaurant="r" :key="r.id" v-for="r in theRestaurants"/>  
