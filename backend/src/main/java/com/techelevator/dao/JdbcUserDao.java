@@ -28,15 +28,15 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-	public User getUserById(Long userId) {
-		String sql = "SELECT * FROM users WHERE user_id = ?";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
-		if(results.next()) {
-			return mapRowToUser(results);
-		} else {
-			throw new RuntimeException("userId "+userId+" was not found.");
-		}
-	}
+    public User getUserById(Long userId) {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        if(results.next()) {
+            return mapRowToUser(results);
+        } else {
+            throw new RuntimeException("userId "+userId+" was not found.");
+        }
+    }
 
     @Override
     public List<User> findAll() {
