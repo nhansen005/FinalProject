@@ -1,0 +1,130 @@
+<template>
+
+<div>
+<h1>Ya Hungry ? </h1>
+<business-summary />
+
+</div>
+</template>
+  
+<script>
+
+import BusinessSummary from '../components/BusinessSummary.vue'
+import tinderService from '../services/TinderService'
+
+export default {
+    components: { 
+      BusinessSummary 
+      },
+    name: "business-card" ,
+    
+    data() {
+      
+      return {
+            
+           
+      };
+  },
+  created() {
+        this.isLoading = true;
+    tinderService.getFavorites()
+    .then((response) => {
+    this.isLoading = false;
+    this.$store.commit("MAKE_FAVORITES", response.data);
+
+    });
+    
+
+},
+methods: {
+
+
+}
+}
+</script>
+
+<style scoped>
+
+body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.left-div {
+    background-image: url("https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80");
+    height: 100vh;
+    background-size: cover;
+}
+h1 {
+    font-family: 'Acme', sans-serif;
+    display: inline;
+    color: white;
+    font-size: 3.5rem;
+}
+.fa-fire {
+    color: rgb(237, 93, 77);
+}
+.logo {
+    padding-left: 50px;
+    padding-top: 25px;
+}
+.right-div {
+  align-items: center;
+}
+h2 {
+    font-family: 'Acme', sans-serif;
+    font-size: 2rem;
+    margin-left: 25px;
+    margin-top: 200px;
+}
+button {
+    display:inline-block;
+    padding:0.5em 3em;
+    border: 0.16em solid rgb(237, 93, 77);
+    border-radius: 6px;
+    background-color: rgb(237, 93, 77);
+    margin:0 0.3em 0.3em 0;
+    box-sizing: border-box;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-family:'Roboto',sans-serif;
+    font-size: 1.2rem;
+    color:rgb(255, 255, 255);
+    text-align:center;
+    transition: all 0.15s;
+}
+button:hover {
+    background-color:rgb(211, 82, 67);
+    border-color: rgb(211, 82, 67);
+}
+#email {
+    margin-left: 25px;
+    font-size: 1.33rem;
+    padding:0.5em 3em;
+    border: 0.05em solid gray;
+    border-radius: 6px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+  .btns{
+    display: flex;
+    align-content: center;
+      
+    }
+#login {
+    display: block;
+    text-align: right;
+    color: rgb(237, 93, 77);
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    margin-top: 15px;
+    margin-right: 20px;
+}
+
+
+
+</style>
