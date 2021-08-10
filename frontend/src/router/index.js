@@ -6,7 +6,6 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import HereMap from '../components/HereMap.vue'
-import QuestionForm from '../components/QuestionForm.vue'
 import Favorites from '../views/Favorites.vue'
 import BusinessCard from '../views/BusinessCard.vue'
 
@@ -65,14 +64,7 @@ const router = new Router({
         requiresAuth: false
       }
     },
-    {
-      path: "/questions",
-      name: "QuestionForm",
-      component: QuestionForm,
-      meta: {
-        requiresAuth: true
-      }
-    },
+    
     {
       path: "/favorites",
       name: "Favorites",
@@ -86,7 +78,7 @@ const router = new Router({
 
     {
       path: "/tindies",
-      name: "BusinessCard",
+      name: "favorites",
       component: BusinessCard,
       meta: {
         requiresAuth: true

@@ -1,9 +1,7 @@
 <template>
 
 <div>
-<h1>Ya Hungry ? </h1>
 <business-summary />
-
 </div>
 </template>
   

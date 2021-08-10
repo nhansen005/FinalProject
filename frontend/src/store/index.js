@@ -42,6 +42,9 @@ export default new Vuex.Store({
     },
     SET_RESTAURANTS(state, data) {
         state.restaurants = data;
+    },
+    MAKE_FAVORITES(state, data) {
+        state.favorites = data;
     }
   }
 })

@@ -1,8 +1,9 @@
 <template>
 <div class="swipe-page">
     <nav>
-     <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'favorites' }">Liked Restaurants</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
     </nav>
 
     <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
@@ -96,7 +97,6 @@ export default {
       this.mile = val
       this.radius = val * 1609;
     },
-
     radius: function (val) {
       this.radius = val,
       this.mile = val/1609;
@@ -105,7 +105,7 @@ export default {
   methods: {
       search() {
         console.log("ran");
-        tinderService.getRestaurantsWithRadius(this.customLocation, this.category, 40000).then(response => {
+        tinderService.getRestaurantsWithRadius(this.customLocation, this.category, this.radius).then(response => {
           this.restaurants = response.data;
           console.log("Here is the response", response.data)
         });
