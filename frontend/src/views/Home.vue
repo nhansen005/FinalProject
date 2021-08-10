@@ -1,5 +1,10 @@
 <template>
-<div>
+<div class="swipe-page">
+    <nav>
+     <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+    </nav>
+
     <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
     
     <div class="custom-search">
@@ -7,7 +12,16 @@
         <br>
         <input type="text" id="cust-location" v-model="customLocation" placeholder="Current Location">
         <br>
-        <input type="range">
+        <label for="input-range">
+            Searching Range: {{ mile }} Miles
+        </label>
+        <br>
+        <input type="range"
+            max="40000"
+            min="1609"
+            step="3218"
+            id="input-range"
+            v-model="radius">
         <br>
         <button v-on:click="search"> Submit </button>
     </div>
@@ -63,7 +77,9 @@ export default {
       customLocation: "",
       category: "",
       showDetails: false,
-      currentRestaurant: {}
+      currentRestaurant: {},
+      mile: "5",
+      radius: '8000'
       };
   },
   created() {
@@ -75,7 +91,17 @@ export default {
         this.currentRestaurant = response.data;
     });
   },
+  watch: {
+    mile: function (val) {
+      this.mile = val
+      this.radius = val * 1609;
+    },
 
+    radius: function (val) {
+      this.radius = val,
+      this.mile = val/1609;
+    }
+  },
   methods: {
       search() {
         console.log("ran");
