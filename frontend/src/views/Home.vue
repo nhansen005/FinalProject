@@ -7,25 +7,27 @@
     </nav>
 
     <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
-    
-    <div class="custom-search">
-        <input type="text" id="category" v-model="category" placeholder="Cuisine Type">
-        <br>
-        <input type="text" id="cust-location" v-model="customLocation" placeholder="Current Location">
-        <br>
-        <label for="input-range">
-            Searching Range: {{ mile }} Miles
-        </label>
-        <br>
-        <input type="range"
+   
+        <h3 v-on:click="displaySearch = !displaySearch">Custom search</h3>
+        <div class="custom-search" v-show="displaySearch">
+            <input type="text" id="category" v-model="category" placeholder="Cuisine Type">
+            <br>
+            <input type="text" id="cust-location" v-model="customLocation" placeholder="Current Location">
+            <br>
+            <label for="input-range">
+                Searching Range: {{ mile }} Miles
+            </label>
+            <br>
+            <input type="range"
             max="40000"
             min="1609"
             step="3218"
             id="input-range"
             v-model="radius">
-        <br>
-        <button v-on:click="search"> Submit </button>
-    </div>
+            <br>
+            <button id="search" v-on:click="search"> Search </button>
+        </div>
+    
 
     <div class="restaurant-card" v-on:click="viewRestaurantDetails" v-show="!showDetails">
         <div class="restaurant-info">
@@ -80,7 +82,8 @@ export default {
       showDetails: false,
       currentRestaurant: {},
       mile: "5",
-      radius: '8000'
+      radius: '8000',
+      displaySearch: false,
       };
   },
   created() {
@@ -188,7 +191,13 @@ nav a {
 }
 
 .restaurant-details {
-   border: 5px solid black;
+    border: 5px solid black;
+    margin: 0 auto;
+    padding: 0;
+    width: 50vw;
+    height: 75vh;
+}
+.restaurant-info {
     margin: 0 auto;
     padding: 0;
     width: 50vw;
@@ -197,10 +206,7 @@ nav a {
 
 .restaurant-detailed-info {
     background-color: rgba(36, 35, 35, 0.591);
-    margin: 0 auto;
-    padding: 0;
-    width: 50vw;
-    height: 75vh;
+   
 }
 
 .location {
@@ -231,9 +237,10 @@ ul {
 
 .categories {
     font-family: 'Roboto', sans-serif;
-    display: inline;
+    display: inline-block;
     background: rgba(255, 255, 255, 0.7);
     padding: 5px;
+    margin-bottom: 20px;
     border-radius: 10px;
     transition: .5s;
     max-width: 35vw;
@@ -315,7 +322,7 @@ ul {
 
 .show-details {
     display:inline-block;
-    margin: 20px;
+    margin: 10px;
     width: 40vw;
     height: 8vh;
     border: 0.16em solid rgb(77, 114, 237);
@@ -338,15 +345,99 @@ button:hover {
     border-color: rgb(69, 102, 211);
 }
 
+h3 {
+    font-family: "Roboto", sans-serif;
+    position: absolute;
+    right: 50px;
+    top: 25px;
+    color: rgb(237, 93, 77);
+}
+
 .custom-search {
+    font-family: "Roboto", sans-serif;
     position: absolute;
     right: 25px;
+    top: 85px;
+}
+
+#cust-location, #category, #search {
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+}
+
+#cust-location {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 label {
     font-family: 'Roboto', sans-serif;
 }
 
-@media only screen and (max-width: 1400px){
+@media only screen and (max-width: 875px){
+
+.restaurant-card, .restaurant-details, .restaurant-info {
+    width: 75vw;
+}
+
+.show-details {
+    font-size: 1rem;
+    width: 35vw;
+}
+
+.like {
+  position: absolute;
+  top: 87vh;
+  right: 25vw;
+}
+
+.dislike {
+  position: absolute;
+  top: 87vh;
+  left: 25vw;
+}
+
+.fa-heart {
+    font-size: 40px;
+}
+
+.fa-times-circle {
+    font-size: 40px;
+}
+.restaurant-detailed-info .restaurant-name {
+    margin-bottom: 0;
+}
+
+.restaurant-detailed-info .categories {
+    display: none;
+}
+
+
+}
+
+@media only screen and (max-width: 610px){
+
+.restaurant-card, .restaurant-details, .restaurant-info {
+    width: 97vw;
+}
+
+.show-details {
+    display: none;
+}
+
+h1, .fa-fire {
+    margin-top: 40px;
+    font-size: 2rem;
+}
+
+h3 {
+    display: none;
+}
+
+.restaurant-name {
+    max-width: 60vw;
+    font-size: 1.5rem;
+}
+
 }
     </style>
