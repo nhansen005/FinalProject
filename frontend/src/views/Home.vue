@@ -3,7 +3,7 @@
     <nav>
         <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
         <router-link v-bind:to="{ name: 'favorites' }">Liked Restaurants</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
     </nav>
 
     <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
