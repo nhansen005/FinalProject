@@ -2,9 +2,7 @@
 <div>
     <h1> This is the homepage! </h1>
     
-    <input type="text" v-model="zipCode"> Please Enter the Zip Code
-     <input type="text" v-model="category"> Please Enter the Category
-    <button v-on:click="search"> Submit </button>
+  
         <!-- <p> {{ restaurants }} </p> -->
         <ul>
             <li v-for="item in restaurants" :key="item.id">

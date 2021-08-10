@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <!-- <img id="gif" v-if="isLoading" src="../assets/loadingImg.gif" /> -->
+    <img id="gif" v-if="isLoading" src="frontend/public/images/loadingImg.gif" />
     <div id="header">
         <div id="review">Powered by</div>  
         <a id="link" href="https://www.yelp.com/" target="_blank">
-          <!-- <img id="yelpLogo" src="@/assets/yelpLogo.png"/>  -->
+          <img id="yelpLogo" src="frontend/public/images/yelpLogo.png"/> 
         </a>
     </div> 
-    <!-- <business-summary :restaurant="r" :key="r.id" v-for="r in theRestaurants"/>   -->
+    <business-summary :restaurant="r" :key="r.id" v-for="r in theRestaurants"/>  
   </div>  
 </template>
 <script>
