@@ -143,6 +143,18 @@ h1 {
     color: black;
     font-size: 3.5rem;
 }
+nav {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-family: "Roboto", sans-serif;
+  
+}
+nav a {
+  text-decoration: none;
+  color: rgb(237, 93, 77);
+}
+
 .fa-fire {
     color: rgb(237, 93, 77);
 }
