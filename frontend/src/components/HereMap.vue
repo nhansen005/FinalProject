@@ -1,5 +1,7 @@
+
+
 <template>
-  <div id="map" class="">
+  <div id="map">
   <!--In the following div the HERE Map will render-->
     <div id="mapContainer" style="height:600px;width:100%" ref="hereMap"></div>
   </div>
@@ -10,22 +12,34 @@ export default {
   name: "HereMap",
   props: {
     center: Object,
-    default:  {
-        lat: 40.457356, 
-        lng: -79.9 
-    }
+    appId: String,
+    appCode: String,
+    latitude: String,
+    longitude: String,
+    zoom: String,
+  
+    // center object { lat: 40.730610, lng: -73.935242 }
   },
   data() {
     return {
-      platform: null,
-      apikey: "kGW-Tq6lUAOPCD6Q4c982m8u--CPdE1LkMmCt6mvYgM"
+   
+      platform: {},
+      map: {},
+      routingService: {},
+      geocoder: {},
+      directions: [],
+      apikey: "{Replace this with HERE API KEY}"
       // You can get the API KEY from developer.here.com
     };
   },
   async mounted() {
+   
+
     // Initialize the platform object:
-    const platform = new window.H.service.Platform({
-      apikey: this.apikey
+    var platform = new window.H.service.Platform({
+      apikey: this.apikey,
+      'app_id': this.appId,
+      'app_code': this.appCode 
     });
     this.platform = platform;
     this.initializeHereMap();
@@ -40,10 +54,9 @@ export default {
 
       // Instantiate (and display) a map object:
       var map = new H.Map(mapContainer, maptypes.vector.normal.map, {
-        zoom: 12,
-        center: this.center,
-        lat: 40.730610, 
-        lng: -73.935242 
+        zoom: 10,
+        center: this.center
+        // center object { lat: 40.730610, lng: -73.935242 }
       });
 
       addEventListener("resize", () => map.getViewPort().resize());
@@ -54,9 +67,68 @@ export default {
       // add UI
       H.ui.UI.createDefault(map, maptypes);
       // End rendering the initial map
-    }
+    },
+    // geocode(query) {
+    //     return new Promise((resolve, reject) => {
+    //         this.geocoder.geocode({ searchText: query }, data => {
+    //             if(data.Response.View[0].Result.length > 0) {
+    //                 data = data.Response.View[0].Result.map(location => {
+    //                     return {
+    //                         lat: location.Location.DisplayPosition.Latitude,
+    //                         lng: location.Location.DisplayPosition.Longitude
+    //                     };
+    //                 });
+    //                 resolve(data);
+    //             } else {
+    //                 reject({ "message": "No data found" });
+    //             }
+    //         }, error => {
+    //             reject(error);
+    //         });
+    //     });
+    // },
+    // route(start, finish) {
+    // var params = {
+    //     "mode": "fastest;car",
+    //     "representation": "display"
+    // }
+    // var waypoints = [];
+    // this.map.removeObjects(this.map.getObjects());
+    // this.directions = [];
+    // waypoints = [this.geocode(start), this.geocode(finish)];
+    // Promise.all(waypoints).then(result => {
+    //     var markers = [];
+    //     for(var i = 0; i < result.length; i++) {
+    //         params["waypoint" + i] = result[i][0].lat + "," + result[i][0].lng;
+    //         markers.push(new H.map.Marker(result[i][0]));
+    //     }
+    //     this.router.calculateRoute(params, data => {
+    //         if(data.response) {
+    //             for(var i = 0; i < data.response.route[0].leg.length; i++) {
+    //                 this.directions = this.directions.concat(data.response.route[0].leg[i].maneuver);
+    //             }
+    //             data = data.response.route[0];
+    //             var lineString = new H.geo.LineString();
+    //             data.shape.forEach(point => {
+    //                 var parts = point.split(",");
+    //                 lineString.pushLatLngAlt(parts[0], parts[1]);
+    //             });
+    //             var routeLine = new H.map.Polyline(lineString, {
+    //                 style: { strokeColor: "blue", lineWidth: 5 }
+    //             });
+    //             this.map.addObjects([routeLine, ...markers]);
+    //             this.map.setViewBounds(routeLine.getBounds());
+    //         }
+    //     }, error => {
+    //         console.error(error);
+    //     });
+    // });
+  // },
+  created() {
+ 
   }
-};
+}
+}
 </script>
 
 <style scoped>
@@ -68,3 +140,6 @@ export default {
   background-color: #ccc;
 }
 </style>
+
+
+ 

@@ -1,44 +1,46 @@
 <template>
+
 <div>
-    <h1> This is the homepage! </h1>
-    
-  
-        <!-- <p> {{ restaurants }} </p> -->
-        <ul>
-            <li v-for="item in restaurants" :key="item.id">
-                {{ item.name }} ({{item.location.display_address[1]}})
-                <img :src="item.image_url" alt="Image Not Available">
-            </li>
-        </ul>
-    </div>
+<h1>Ya Hungry ? </h1>
+<business-summary />
+
+</div>
 </template>
+  
 <script>
-import tinderService from '../services/TinderService';
+
+import BusinessSummary from '../components/BusinessSummary.vue'
+import tinderService from '../services/TinderService'
+
 export default {
-  name: "home",
-  data() {
+    components: { 
+      BusinessSummary 
+      },
+    name: "business-card" ,
+    
+    data() {
+      
       return {
-      restaurants: [],
-      zipCode: "",
-      category: ""
+            
+           
       };
   },
   created() {
-    tinderService.getRestaurantsNoRadius().then(response => {
-      this.restaurants = response.data;
-      console.log("Here is the response", response.data)
+        this.isLoading = true;
+    tinderService.getFavorites()
+    .then((response) => {
+    this.isLoading = false;
+    this.$store.commit("MAKE_FAVORITES", response.data);
+
     });
-  },
-  methods: {
-    //   search() {
-    //     console.log("ran");
-    //     tinderService.getRestaurantsWithRadius(this.zipCode, this.category, 40000).then(response => {
-    //       this.restaurants = response.data;
-    //       console.log("Here is the response", response.data)
-    //     });
-    //   }
-  }
-};
+    
+
+},
+methods: {
+
+
+}
+}
 </script>
 
 <style scoped>
@@ -58,7 +60,7 @@ body {
 h1 {
     font-family: 'Acme', sans-serif;
     display: inline;
-    color: black;
+    color: white;
     font-size: 3.5rem;
 }
 .fa-fire {
@@ -122,38 +124,7 @@ button:hover {
     margin-top: 15px;
     margin-right: 20px;
 }
-#login:hover {
-    text-decoration: underline;
-}
-@media only screen and (max-width: 1400px){
-    button {
-        display: block;
-        margin: 25px;
-        padding: 0.8rem 8.3rem;
-    }
-    #email {
-        display: block;
-        margin: 25px;
-    }
-}
-@media only screen and (max-width: 881px) {
-    body {
-        grid-template-columns: 1fr;
-    }
-    .logo {
-        margin-top: 40px;
-        position: absolute;
-    }
-    #login {
-        position: absolute;
-        top: 5px;
-        right: 2px;
-    }
-    h2 {
-        margin-top: 20px;
-    }
 
-  
-}
+
 
 </style>

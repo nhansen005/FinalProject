@@ -3,7 +3,18 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 import axios from 'axios'
+// import PortalVue from 'portal-vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+// import '../styles/app.scss'
 
+// Import Bootstrap an BootstrapVue CSS files (order is important)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = process.env.VUE_APP_REMOTE_API;
