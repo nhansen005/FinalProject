@@ -1,21 +1,24 @@
 <template>
 <div>
     <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
+    
     <div class="custom-search">
-    <input type="text" id="category" v-model="category" placeholder="Cuisine Type">
-    <br>
-    <input type="text" id="cust-location" v-model="customLocation" placeholder="Current Location">
-    <br>
-    <input type="range">
-    <br>
-    <button v-on:click="search"> Submit </button>
+        <input type="text" id="category" v-model="category" placeholder="Cuisine Type">
+        <br>
+        <input type="text" id="cust-location" v-model="customLocation" placeholder="Current Location">
+        <br>
+        <input type="range">
+        <br>
+        <button v-on:click="search"> Submit </button>
     </div>
+
     <div class="restaurant-card" v-on:click="viewRestaurantDetails" v-show="!showDetails">
         <div class="restaurant-info">
             <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
             <br>
-            <ul v-for="category in restaurants[0].categories" :key="category.title"><li class="categories">{{ category.title }} </li></ul>
-            
+            <ul v-for="category in restaurants[0].categories" :key="category.title">
+                <li class="categories">{{ category.title }} </li>
+            </ul>
         </div>
         <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
     </div>
@@ -23,6 +26,7 @@
     <div class="like" v-on:click="like"><i class="fas fa-heart fa-5x"></i></div>
     <div class="dislike" v-on:click="dislike"><i class="fas fa-times-circle fa-5x"></i></div>
     
+
     <div class="restaurant-details" v-on:click="viewRestaurantDetails" v-if="showDetails">
           <div class="restaurant-info restaurant-detailed-info">
             <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
@@ -38,12 +42,16 @@
         </div>
         <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
     </div>
+
+
     <div class="show-details-div">
-     <button class="show-details" v-show="!showDetails" v-on:click="viewRestaurantDetails">Restaurant Details</button>
-     <button class="show-details" v-show="showDetails" v-on:click="viewRestaurantDetails">Hide Restaurant Details</button>
+        <button class="show-details" v-show="!showDetails" v-on:click="viewRestaurantDetails">Restaurant Details</button>
+        <button class="show-details" v-show="showDetails" v-on:click="viewRestaurantDetails">Hide Restaurant Details</button>
     </div>
-    </div>
+
+</div>
 </template>
+
 <script>
 import tinderService from '../services/TinderService';
 export default {
