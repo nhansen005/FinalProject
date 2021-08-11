@@ -8,13 +8,13 @@
     </nav>
 
 
-<h1></h1>
-
-<h2>Yinz Guys Wanna Join CutOffJortsCodeCrew</h2>
 
 
-<h3>Wanted: Machine-like cyborgs with 110 years + coding experience</h3>
-<p style="font-weight: bold; padding-left: 10px">
+<h1 style="margin-top: 60px; font-size: 10px; text-align: center">Yinz Guys Wanna Join CutOffJortsCodeCrew</h1>
+
+
+<h2 style= "font-size: 13px">Wanted: Machine-like cyborgs with 110 years + coding experience</h2>
+<p style="padding-top: 30px;font-weight: bold; padding-left: 10px; text-align: center;">
 
 
 BASIC REQUIREMENTS 
@@ -89,7 +89,10 @@ nav a {
   position: fixed;
   right: 10vw;
   top: 45vh;
+  
 }
+
+
 
 .dislike {
   position: fixed;
@@ -259,7 +262,13 @@ button:hover {
     background-color:rgb(69, 102, 211);
     border-color: rgb(69, 102, 211);
 }
-
+h2 {
+ font-family: "Roboto", sans-serif;
+    position: absolute;
+    right: 50px;
+    top: 25px;
+    color: rgb(237, 93, 77);
+}
 h3 {
     font-family: "Roboto", sans-serif;
     position: absolute;
@@ -351,7 +360,8 @@ h1, .fa-fire {
 }
 
 h3 {
-    display: none;
+    display: flex;
+   
 }
 
 .restaurant-name {

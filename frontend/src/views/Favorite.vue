@@ -1,119 +1,40 @@
 <template>
   <div id="tinders">
-     <nav>
-        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{ name: 'favorites' }">Liked Restaurants</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{ name: 'careers' }">Careers</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
-    </nav>
     <div class="logo">
-      <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
+      <h1>chicken tinder</h1>
+      <i class="fas fa-fire fa-3x"></i>
     </div>
-    <h2>{{this.$store.state.user.username}} 's favorites</h2>
-  
-  <table
-  >
-    <thead>
-      <tr id="labels">
-        <th>Restaurant Name</th>
-        <th>Categories</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-  
-    <tbody>
-      <tr v-for="restaurant in restaurants" v-bind:key="restaurant.id">
-        
-        <td class="picture-and-name">
-            <div class="restaurant-name">
-                <h3 class="restaurant-name">{{ restaurant.name }}</h3>
-            </div>
-            <img class="restaurant-pic" :src="restaurant.image_url" alt="No image provided">
-        </td>
-        <td><p v-for="category in restaurant.categories" :key="category.title">{{category.title}}</p></td>
-        <td><a :href="`tel:${restaurant.display_phone}`">{{restaurant.display_phone }}</a></td>
-        <td>{{restaurant.location.display_address[0]}}, {{restaurant.location.display_address[1] }}</td>
-        <td><div v-on:click="removeFavorites(restaurant.id)"><i class="fas fa-times-circle fa-3x"></i></div></td>
-      </tr>
-    </tbody>
 
-      <!-- <template v-slot:cell(name)="data">
-        <b-link :href="data.item.url" target="_blank">
-          {{ data.item.name }}</b-link
-        >
-      </template>
-
-      <template v-slot:cell(categories)="data">
-        {{ data.item.categories[0].title }}
-      </template>
-
-      <template v-slot:cell(location)="data">
-        {{ data.item.location.display_address[0] }},
-        {{ data.item.location.display_address[1] }}
-      </template>
-
-      <template v-slot:cell(tindies)="data">
-        <img :src="data.item.image_url" alt="" class="img-thumbnail" />
-      </template>
-      <template v-slot:cell(telephone)="data">
-        {{ data.item.display_phone }}
-      </template> -->
-    </table>
+    <favorites-list />
   </div>
 </template>
  
 <script>
+import FavoritesList from "../components/FavoritesList.vue";
 import tinderService from "../services/TinderService";
 export default {
+  components: { FavoritesList },
   name: "business-summary",
   data() {
     return {
-      restaurants: []
+      restaurants: [],
     };
   },
-  beforeCreate() {
-    // tinderService.getRestaurantsNoRadius().then((response) => {
-    //   if (response.status == 200) {
-    //     this.restaurants = response.data;
-    //     console.log("Here is the response", response.data);
-    //   } else {
-    //     console.log("Yinz couldnt pull nothing");
-    //   }
-    // });
-    tinderService
-      .getFavorites()
-      .then((response) => {
-        this.restaurants = response.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    
-      // this.restaurants = this.$store.state.favorites;
-  
-  },
   methods: {
-  removeFavorites() {
-    this.restaurants.shift(this.restaurants[0]);
-        tinderService.deleteFavorites(this.restaurants[0].id);  
-      
-        
-    
+    removeFavorites() {
+      this.restaurants.shift(this.restaurants[0]);
+      tinderService.deleteFavorites(this.restaurants[0].id);
+    },
   },
-}
 };
 </script>
 
 <style scoped>
-
 nav {
   position: absolute;
   right: 5px;
   top: 5px;
   font-family: "Roboto", sans-serif;
-  
 }
 nav a {
   text-decoration: none;
@@ -140,44 +61,42 @@ h2 {
 }
 
 table {
-    width: 100%;
-    font-family: "Roboto";
-    text-align: center;
-    border-collapse: collapse;
+  width: 100%;
+  font-family: "Roboto";
+  text-align: center;
+  border-collapse: collapse;
 }
 
 .picture-and-name {
-    width: 20vw;
-    height: 20vh;
+  width: 20vw;
+  height: 20vh;
 }
 
 .restaurant-name {
-    background: rgba(255, 255, 255, 0.694);
-    border-radius: 5px;
-    position: absolute;
-    width: 18vw;
-    left: .8vw;
+  background: rgba(255, 255, 255, 0.694);
+  border-radius: 5px;
+  position: absolute;
+  width: 18vw;
+  left: 0.8vw;
 }
 
 .restaurant-pic {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: 3px solid black;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 3px solid black;
 }
 
 #labels {
-    background-color: rgb(233, 233, 233);
-    font-size: 1.5rem;
+  background-color: rgb(233, 233, 233);
+  font-size: 1.5rem;
 }
 
 tr:nth-child(even) {
-    background-color: rgb(233, 233, 233);
+  background-color: rgb(233, 233, 233);
 }
 
 .fa-times-circle {
-    color: rgb(237, 93, 77);
+  color: rgb(237, 93, 77);
 }
-
-
 </style>
