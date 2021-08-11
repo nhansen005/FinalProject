@@ -77,8 +77,8 @@ export default {
       return {
       restaurants: [],
       zipCode: this.$store.state.user.zipcode,
-      customLocation: "",
-      category: "Restaurant",
+      customLocation: this.$store.state.user.zipcode,
+      category: "",
       showDetails: false,
       currentRestaurant: {},
       mile: "5",
