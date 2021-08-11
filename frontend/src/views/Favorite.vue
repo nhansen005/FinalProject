@@ -32,7 +32,7 @@
             <img class="restaurant-pic" :src="restaurant.image_url" alt="No image provided">
         </td>
         <td><p v-for="category in restaurant.categories" :key="category.title">{{category.title}}</p></td>
-        <td>{{restaurant.display_phone }}</td>
+        <td><a :href="`tel:${restaurant[restaurant.display_phone]}`">{{restaurant.display_phone }}</a></td>
         <td>{{restaurant.location.display_address[0]}}, {{restaurant.location.display_address[1] }}</td>
         <td><div v-on:click="removeFavorites(restaurant.id)"><i class="fas fa-times-circle fa-3x"></i></div></td>
       </tr>
