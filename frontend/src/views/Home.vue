@@ -25,7 +25,7 @@
             id="input-range"
             v-model="radius">
             <br>
-            <button id="search" v-on:click="search"> Search </button>
+            <button id="search" v-on:click.prevent="search"> Search </button>
         </div>
     
 
@@ -100,7 +100,7 @@ export default {
       })
   },
   created() {
-    tinderService.getRestaurantsNoRadius(this.$store.state.user.zipcode, "").then(response => {
+    tinderService.getRestaurantsNoRadius(this.$store.state.user.zipcode, this.category).then(response => {
       this.restaurants = response.data;
       console.log("Here is the response", response.data)
     }),
@@ -121,9 +121,9 @@ export default {
   methods: {
       search() {
         console.log("ran");
-        tinderService.getRestaurantsWithRadius(this.customLocation, this.category, this.radius).then(response => {
+        tinderService.getRestaurantsWithRadius(this.customLocation, this.category.toLowerCase(), this.radius).then(response => {
           this.restaurants = response.data;
-          console.log("Here is the response", response.data)
+          console.log("Here is the search response", response.data)
         });
       },
       like() {
