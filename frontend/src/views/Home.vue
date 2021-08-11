@@ -86,6 +86,19 @@ export default {
       displaySearch: false,
       };
   },
+  mounted() {
+      document.addEventListener("keydown", event => {
+          if (event.keyCode == 39) {
+            this.like();
+          }
+          if (event.keyCode == 38) {
+              this.viewRestaurantDetails();
+          }
+          if (event.keyCode == 37) {
+            this.like();
+          }
+      })
+  },
   created() {
     tinderService.getRestaurantsNoRadius(this.$store.state.user.zipcode, "").then(response => {
       this.restaurants = response.data;
