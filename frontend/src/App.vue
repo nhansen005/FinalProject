@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+        <nav>
+        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'favorites' }">Liked Restaurants</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'careers' }">Careers</router-link>
+        <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
+    </nav>
+
      
     <router-view />
     
