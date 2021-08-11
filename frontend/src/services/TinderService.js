@@ -18,6 +18,11 @@ export default {
       }
     })
   },
+
+  autoComplete(text, latitude, longitude) {
+    return axios.get(`/autocomplete/?${text}&${latitude}&${longitude}`)
+  },
+
   getBusinessByID(businessID) {
     return axios.get(`/businesses/${businessID}`)
   },

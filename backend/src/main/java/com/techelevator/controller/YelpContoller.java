@@ -29,4 +29,10 @@ public class YelpContoller {
         Business[] businessArray = new Business[businessList.size()];
         return businessList.toArray(businessArray);
     }
+
+    @RequestMapping(path = "/businesses/{id}", method = RequestMethod.GET)
+    public Business getBusinessDetails(@PathVariable String id) {
+        Business business = yelpService.getBusinessByID(id);
+        return business;
+    }
 }

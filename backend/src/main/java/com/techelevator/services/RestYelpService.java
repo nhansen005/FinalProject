@@ -27,14 +27,14 @@ public class RestYelpService implements YelpService {
 
     @Override
     public List<Business> getBusinessesNoRadius(String zipCode, String category) {
-        YelpBusinessesResponse response = restTemplate.exchange(BASE_URL + "businesses/search?location={zipCode}&term={category}&limit=10",
+        YelpBusinessesResponse response = restTemplate.exchange(BASE_URL + "businesses/search?location={zipCode}&term=food&categories={category}",
                 HttpMethod.GET, makeAuthEntity(TOKEN), YelpBusinessesResponse.class, zipCode, category).getBody();
         return response.getBusinesses();
     }
 
     @Override
     public List<Business> getBusinessesWithRadius(String zipCode, String category, String radius) {
-        YelpBusinessesResponse response = restTemplate.exchange(BASE_URL + "businesses/search?location={zipCode}&term={category}&radius={radius}&limit=10",
+        YelpBusinessesResponse response = restTemplate.exchange(BASE_URL + "businesses/search?location={zipCode}&categories={category}&radius={radius}&term=food",
                 HttpMethod.GET, makeAuthEntity(TOKEN), YelpBusinessesResponse.class, zipCode, category, radius).getBody();
         return response.getBusinesses();
     }

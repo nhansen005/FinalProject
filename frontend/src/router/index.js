@@ -6,8 +6,8 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import HereMap from '../components/HereMap.vue'
-import QuestionForm from '../components/QuestionForm.vue'
-import Favorites from '../views/Favorites.vue'
+import Favorites from '../views/Favorite.vue'
+
 
 Vue.use(Router)
 
@@ -64,13 +64,15 @@ const router = new Router({
         requiresAuth: false
       }
     },
+
     {
-      path: "/questions",
-      name: "QuestionForm",
-      component: QuestionForm,
+      path: "/tindies",
+      name: "favorites",
+      component: Favorites,
       meta: {
         requiresAuth: true
       }
+
     }
   ]
 })

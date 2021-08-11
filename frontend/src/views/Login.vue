@@ -2,14 +2,15 @@
 
 <div class = "landing-page">
     <div class="left-div">
+
       <div class="logo">
-        <h1>restaurant tinder</h1>
+        <h1>chicken tinder</h1>
         <i class="fas fa-fire fa-3x"></i>
         <div id="registration-form">
         <form class="form-signup" v-show="showRegistration && !showlogin" @submit.prevent="register">
           <h2 v-class="error-message" v-if="registrationErrors">
-        {{ registrationErrorMsg }}
-      </h2>
+            {{ registrationErrorMsg }}
+          </h2>
           <input type="text" name="name" id="firstname" placeholder="First Name" >
           <input type="text" name="name" id="lastname" placeholder="Last Name" >
           <input type="text" name="username" id="username" placeholder="Username" v-model="newUser.username" required>
@@ -22,11 +23,13 @@
           <input type="text" name="state" id="state" placeholder="State/Province">
           <input type="number" name="zipcode" id="zipcode" placeholder="Zip Code" v-model="newUser.zipcode" required>
           <input type="text" name="country" id="Country" placeholder="Country">
-          <button action="submit" id="">Register</button>
+          <button action="submit" id="registerButton">Register</button>
         </form>
         </div>
       </div>
+      
     </div>
+
     <div class="right-div">
         <a v-on:click="showlogin = ! showlogin" id="login" v-show="!showlogin">Sign in</a>
         <a v-on:click="showlogin = ! showlogin" id="registeroption" v-show="showlogin">Don't have an account? Sign up!</a>
@@ -68,7 +71,8 @@ export default {
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
       showlogin: false,
-      showRegistration: false
+      showRegistration: false,
+      successfulRegistration: false,
     };
   },
   methods: {
@@ -100,7 +104,7 @@ export default {
           .then((response) => {
             if (response.status == 201) {
               this.$router.push({
-                path: '/login',
+                path: '/',
                 query: { registration: 'success' },
               });
             }
@@ -157,12 +161,13 @@ export default {
 }
 
 .form-signup {
-  margin-top: 70px
+  width: 90%;
+  text-align: center;
 }
 
 .form-signup input {
     padding:0.3em 3em;
-    margin:0 0.3em 0.3em 0;
+    margin: 5px;
     font-family:'Roboto',sans-serif;
     font-size: 1rem;
 }
@@ -194,11 +199,10 @@ h2 {
 button {
     display:inline-block;
     margin: 25px;
-        padding: 0.8rem 8.3rem;
+    padding: 0.8rem 8.3rem;
     border: 0.16em solid rgb(237, 93, 77);
     border-radius: 6px;
     background-color: rgb(237, 93, 77);
-    
     box-sizing: border-box;
     text-decoration:none;
     text-transform:uppercase;
@@ -242,6 +246,22 @@ button:hover {
     }
 }
 @media only screen and (max-width: 881px) {
+    .left-div {
+      width: 100vw;
+    }
+
+    #registerButton {
+      padding: 15px 20vw
+    }
+     h1 {
+      max-width: 100vw;
+      font-size: 2rem;
+    }
+
+    .fa-fire {
+      font-size: 2rem;
+    }
+
     .landing-page {
         grid-template-columns: 1fr;
     }
@@ -265,8 +285,17 @@ button:hover {
       left: 50px;
     }
 
-    .form-signup {
-      margin-top: 30px;
+    .form-signin input {
+      padding: 5px 20px;
     }
+
+    #signin {
+      margin: 2vh auto;
+      padding: 2vh 24vw;
+    }
+
+   
+
+
 }
 </style>
