@@ -1,16 +1,15 @@
 <template>
   <div id="tinders">
-    <nav>
+     <nav>
         <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
         <router-link v-bind:to="{ name: 'favorites' }">Liked Restaurants</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{ name: 'careers' }">Careers</router-link>
+        <router-link v-bind:to="{ name: 'careers' }">Careers</router-link>&nbsp;|&nbsp;
         <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
     </nav>
-
     <div class="logo">
       <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
     </div>
-    <h2>{{this.$store.state.user.firstname}} 's favorites</h2>
+    <h2>{{this.$store.state.user.username}} 's favorites</h2>
   
   <table
   >
@@ -31,12 +30,12 @@
             <div class="restaurant-name">
                 <h3 class="restaurant-name">{{ restaurant.name }}</h3>
             </div>
-            <img class="restaurant-pic" :src="restaurant.image_url" alt="No image provided" :href="restaraunt.url" target="_blank">
+            <img class="restaurant-pic" :src="restaurant.image_url" alt="No image provided">
         </td>
         <td><p v-for="category in restaurant.categories" :key="category.title">{{category.title}}</p></td>
-        <td><a :href="`tel:${restaurant[restaurant.id.display_phone]}`">{{restaurant.display_phone }}</a></td>
+        <td><a :href="`tel:${restaurant.display_phone}`">{{restaurant.display_phone }}</a></td>
         <td>{{restaurant.location.display_address[0]}}, {{restaurant.location.display_address[1] }}</td>
-        <td><div v-on:click="removeFavorites(this.restaurant.id)"><i class="fas fa-times-circle fa-3x"></i></div></td>
+        <td><div v-on:click="removeFavorites(restaurant.id)"><i class="fas fa-times-circle fa-3x"></i></div></td>
       </tr>
     </tbody>
 
@@ -97,17 +96,11 @@ export default {
   },
   methods: {
   removeFavorites() {
-    tinderService
-      .dislike()
-      .then((response) => {
-        if (response.status == 200) {
-          console.log("Yee sonnnn you got dat list");
-          return this.$store.state.favorites;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.restaurants.shift(this.restaurants[0]);
+        tinderService.deleteFavorites(this.restaurants[0].id);  
+      
+        
+    
   },
 }
 };
