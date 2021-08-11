@@ -8,6 +8,7 @@ import store from '../store/index'
 import HereMap from '../components/HereMap.vue'
 import Favorites from '../views/Favorite.vue'
 import Careers from '../views/Careers.vue'
+import Legal from '../views/Legal.vue'
 
 Vue.use(Router)
 
@@ -82,7 +83,17 @@ const router = new Router({
           requiresAuth: false
         }
 
+      },
+
+    {
+      path: "/legal",
+      name: "legal",
+      component: Legal,
+      meta: {
+        requiresAuth: false
       }
+
+    }
 
     
   ]
