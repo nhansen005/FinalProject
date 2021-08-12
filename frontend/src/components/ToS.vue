@@ -1,7 +1,7 @@
 <template>
 <div>
 
-<h1>Legal Stuff</h1>
+<h2 style="text-align: center">Legal Stuff</h2>
 
     <p>
       This Memorandum of Agreement (this “MOA” or this “Memorandum of
@@ -9,7 +9,7 @@
       2021 (“Effective Date”) by and between:
     </p>
 
-    <h4>CutoffJortsCodeCrew,</h4>
+    <h4>CutoffJortsCodeCrew™,</h4>
     <p style="font-style: italic">
       an LLC company, with an office located at Yo Momma's House;
     </p>

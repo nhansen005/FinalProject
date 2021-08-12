@@ -7,7 +7,7 @@
       <router-link v-bind:to="{ name: 'favorites' }"
         >Tinders</router-link
       >&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'careers' }">Careers</router-link
+      <router-link v-bind:to="{ name: 'about' }">About Us</router-link
       >&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
     </nav>
