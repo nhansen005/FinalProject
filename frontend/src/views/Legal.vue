@@ -52,12 +52,7 @@ h3 {
   font-family: "Acme", sans-serif;
 }
 
-h1 {
-  font-family: "Acme", sans-serif;
-  display: inline;
-  color: white;
-  font-size: 3.5rem;
-}
+
 .fa-fire {
   color: rgb(237, 93, 77);
 }

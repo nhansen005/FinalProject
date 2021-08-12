@@ -68,4 +68,20 @@ public class SeleniumTests {
 
         assertNotNull(appDiv);
     }
+
+    @Test
+
+    public void users_can_log_in() {
+        WebElement datNav = webDriver.findElement(By.id("navbar")); //nav
+
+        assertNotNull(datNav);
+    }
+
+    @Test
+
+    public void yinz_knock_it_off() {
+        WebElement yinz = webDriver.findElement(By.id("tindies")); //favoritesList
+
+        assertNotNull(yinz);
+    }
 }

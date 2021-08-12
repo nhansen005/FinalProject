@@ -23,7 +23,7 @@
       <br />
       <input
         type="range"
-        max="40000"
+        max="37420"
         min="1609"
         step="3218"
         id="input-range"
@@ -206,7 +206,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 body {
   min-width: 100%;
   margin: 0;

@@ -1,6 +1,6 @@
 <template>
 <div>
-     <h2>{{ this.$store.state.user.username }} 's favorites</h2>
+     <h2>{{ this.$store.state.user.username}} 's favorites</h2>
 
 <table
   >
@@ -25,32 +25,12 @@
         </td>
         <td><p v-for="category in restaurant.categories" :key="category.title">{{category.title}}</p></td>
         <td><a :href="`tel:${restaurant.display_phone}`">{{restaurant.display_phone }}</a></td>
-        <td>{{restaurant.location.display_address[0]}}, {{restaurant.location.display_address[1] }}</td>
+        <td><a :href="`https://www.google.com/maps/place/?=${restaurant.location.display_address[0] }`" target="_blank">{{restaurant.location.display_address[0]}}, {{restaurant.location.display_address[1] }}</a></td>
         <td><div v-on:click="removeFavorites(restaurant.id)"><i class="fas fa-times-circle fa-3x"></i></div></td>
       </tr>
     </tbody>
 
-      <!-- <template v-slot:cell(name)="data">
-        <b-link :href="data.item.url" target="_blank">
-          {{ data.item.name }}</b-link
-        >
-      </template>
-
-      <template v-slot:cell(categories)="data">
-        {{ data.item.categories[0].title }}
-      </template>
-
-      <template v-slot:cell(location)="data">
-        {{ data.item.location.display_address[0] }},
-        {{ data.item.location.display_address[1] }}
-      </template>
-
-      <template v-slot:cell(tindies)="data">
-        <img :src="data.item.image_url" alt="" class="img-thumbnail" />
-      </template>
-      <template v-slot:cell(telephone)="data">
-        {{ data.item.display_phone }}
-      </template> -->
+     
     </table>
     </div>
   

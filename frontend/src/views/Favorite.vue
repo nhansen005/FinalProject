@@ -1,9 +1,9 @@
 <template>
   <div id="tinders">
-    <div class="logo">
+    <!-- <div class="logo">
       <h1>chicken tinder</h1>
       <i class="fas fa-fire fa-3x"></i>
-    </div>
+    </div> -->
 
     <favorites-list />
   </div>

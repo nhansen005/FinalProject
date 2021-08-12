@@ -1,9 +1,6 @@
 <template>
 <div class='navvy'>
-  <div class="logo">
-      <h1>chicken tinder</h1>
-      <i class="fas fa-fire fa-3x"></i>
-    </div>
+
 
   <nav>
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
