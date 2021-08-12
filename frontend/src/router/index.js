@@ -10,6 +10,7 @@ import Favorites from '../views/Favorite.vue'
 import Careers from '../views/Careers.vue'
 import Legal from '../views/Legal.vue'
 import About from '../views/About.vue'
+import Easter from '../views/Easter'
 
 Vue.use(Router)
 
@@ -103,6 +104,15 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },
+
+      {
+        path: "/easter",
+        name: "easter",
+        component: Easter,
+        meta: {
+          requiresAuth: false
+        }
 
     }
 

@@ -86,7 +86,7 @@
               <p style="font-weight: bold">A.K.A.</p>
               <p style="font-size: 16px">The Carnival Kid</p>
               <p style="font-weight: bold">A.K.A.</p>
-             <p style="font-size: 16px">Mr. International</p>
+             <p style="font-size: 16px">Señor Internacional</p>
             </div>
           
         </tr>

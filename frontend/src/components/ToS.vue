@@ -226,7 +226,7 @@
       real though. Yinz guys are totally f**^%ked. For real though.
     </p>
     <h3>Notwithstanding:</h3>
-    <p class="pop">ARTICLE 5:</p>
+    <p class="pop"><router-link v-bind:to="{ name: 'easter' }">ARTICLE 5: </router-link></p>
     <p style="font-size: 6px">
       Yinz guys are totally f**^%ked. For real though. Yinz guys are totally
       f**^%ked. For real though. Yinz guys are totally f**^%ked. For real
