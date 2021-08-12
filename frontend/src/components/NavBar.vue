@@ -5,7 +5,7 @@
   <nav>
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'favorites' }"
-        >Liked Restaurants</router-link
+        >Tinders</router-link
       >&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'careers' }">Careers</router-link
       >&nbsp;|&nbsp;

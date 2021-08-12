@@ -20,26 +20,39 @@ export default {
       restaurants: [],
     };
   },
+
+  beforeCreate(){
+    tinderService
+      .getFavorites()
+      .then((response) => {
+        this.restaurants = response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  },
   methods: {
     removeFavorites() {
-      this.restaurants.shift(this.restaurants[0]);
-      tinderService.deleteFavorites(this.restaurants[0].id);
-    },
-  },
-};
+    tinderService
+      .deleteFavorites()
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Yee sonnnn you got dat list");
+          return this.$store.state.favorites;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+}
+}
 </script>
 
 <style scoped>
-nav {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  font-family: "Roboto", sans-serif;
-}
-nav a {
-  text-decoration: none;
-  color: rgb(237, 93, 77);
-}
+
+
 h1 {
   font-family: "Acme", sans-serif;
   display: inline;

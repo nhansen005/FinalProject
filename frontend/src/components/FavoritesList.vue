@@ -1,8 +1,8 @@
 <template>
-<div>
-     <h2>{{ this.$store.state.user.username}} 's favorites</h2>
+  <div>
+    <h2 style="text-align: center">{{ this.$store.state.user.username }} 's favorites</h2>
 
-<table
+     <table
   >
     <thead>
       <tr id="labels">
@@ -24,27 +24,36 @@
             <img class="restaurant-pic" :src="restaurant.image_url" alt="No image provided">
         </td>
         <td><p v-for="category in restaurant.categories" :key="category.title">{{category.title}}</p></td>
-        <td><a :href="`tel:${restaurant.display_phone}`">{{restaurant.display_phone }}</a></td>
-        <td><a :href="`https://www.google.com/maps/place/?=${restaurant.location.display_address[0] }`" target="_blank">{{restaurant.location.display_address[0]}}, {{restaurant.location.display_address[1] }}</a></td>
+            <td>
+            <a :href="`tel:${restaurant.display_phone}`">{{
+              restaurant.display_phone
+            }}</a>
+          </td>
+                  <td>
+            <a
+              :href="`https://google.com/maps?q=${restaurant.location.display_address}`" target="_blank">
+              {{ restaurant.location.display_address[0] }},
+              {{ restaurant.location.display_address[1] }}
+            </a>
+          </td>
+
         <td><div v-on:click="removeFavorites(restaurant.id)"><i class="fas fa-times-circle fa-3x"></i></div></td>
       </tr>
     </tbody>
 
-     
+      
     </table>
-    </div>
-  
+  </div>
 </template>
 
-<script>
-import tinderService from '../services/TinderService'
-export default {
-    name:"favorites-list",
-   
-    data() {
 
-         return {
-    
+<script>
+import tinderService from "../services/TinderService";
+export default {
+  name: "favorites-list",
+
+  data() {
+    return {
       restaurants: [],
     };
   },
@@ -52,10 +61,7 @@ export default {
     tinderService
       .getFavorites()
       .then((response) => {
-        
-          this.restaurants = response.data;
-      
-        
+        this.restaurants = response.data;
       })
       .catch((err) => {
         console.log(err);
@@ -66,18 +72,11 @@ export default {
       this.restaurants.shift(this.restaurants[0]);
       tinderService.deleteFavorites(this.restaurants[0].id);
     }
-
-
-
-
   }
 }
-
 </script>
 
 <style scoped>
-
-
 h1 {
   font-family: "Acme", sans-serif;
   display: inline;
@@ -87,10 +86,7 @@ h1 {
 .fa-fire {
   color: rgb(237, 93, 77);
 }
-.logo {
-  padding-left: 50px;
-  padding-top: 25px;
-}
+
 h2 {
   font-family: "Acme", sans-serif;
   font-size: 2rem;

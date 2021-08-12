@@ -293,6 +293,7 @@ button:hover {
       margin: 2vh auto;
       padding: 2vh 24vw;
     }
+    
 
    
 
