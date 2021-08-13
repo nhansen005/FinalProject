@@ -1,6 +1,10 @@
 <template>
 <body>
-  <div
+       <div class=logo>
+      <h1>chicken tinder</h1>
+      <i class="fas fa-fire fa-3x"></i>
+</div>
+  <div 
   >
 
     <h2 style="text-align: center">The team behind Chicken Tinder:</h2>

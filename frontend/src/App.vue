@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-     
-      <h1>chicken tinder</h1>
-      <i class="fas fa-fire fa-3x"></i>
 
   
  

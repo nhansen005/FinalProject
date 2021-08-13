@@ -1,10 +1,13 @@
 <template>
   <div class="swipe-page">
-     
+        <div class=logo>
+      <h1>chicken tinder</h1>
+      <i class="fas fa-fire fa-3x"></i>
+</div>
 
 
-    <h3 v-on:click="displaySearch = !displaySearch">Custom search</h3>
-    <div class="custom-search" v-show="displaySearch">
+    <h3 v-on:click="displaySearch = !displaySearch" style="right: 100px">Custom search</h3>
+    <div class="custom-search" v-show="displaySearch" style="display:flex; flex-direction: column; align-items: center">
       <input
         type="text"
         id="category"
@@ -30,7 +33,7 @@
         v-model="radius"
       />
       <br />
-      <button id="search" v-on:click.prevent="search">Search</button>
+      <button id="search" v-on:click.prevent="search" style="position: relative; bottom: 30px ">Search</button>
     </div>
 
     <div
@@ -420,14 +423,16 @@ h3 {
 .custom-search {
     font-family: "Roboto", sans-serif;
     position:absolute;
-    right: 25px;
+    right: -10px;
     top: 85px;
+
    
 }
 
 #cust-location, #category, #search {
     font-family: "Roboto", sans-serif;
     font-size: 1rem;
+    
 }
 
 #cust-location {

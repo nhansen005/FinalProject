@@ -1,11 +1,15 @@
 <template>
 
 <div class ="careers">
+       <div class=logo>
+      <h1>chicken tinder</h1>
+      <i class="fas fa-fire fa-3x"></i>
+</div>
   
 
 
 
-<h1 style="margin-top: 60px; font-size: 10px; text-align: center">Yinz Guys Wanna Join CutOffJortsCodeCrew</h1>
+<h1 style="margin-top: 60px; margin-left: 130px;font-size: 10px; text-align: center">Yinz Guys Wanna Join CutOffJortsCodeCrew</h1>
 
 
 <h2 style= "font-size: 13px">Wanted: Machine-like cyborgs with 110 years + coding experience</h2>

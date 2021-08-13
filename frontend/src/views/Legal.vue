@@ -1,5 +1,10 @@
 <template>
   <div class="legal">
+        <div class=logo>
+      <h1>chicken tinder</h1>
+      <i class="fas fa-fire fa-3x"></i>
+</div>
+  
 
    <to-s />
   </div>

@@ -3,9 +3,9 @@
 <div class = "landing-page">
     <div class="left-div">
 
-      <div class="logo"><!-- 
+      <div>
         <h1>chicken tinder</h1>
-        <i class="fas fa-fire fa-3x"></i> -->
+        <i class="fas fa-fire fa-3x"></i>
         <div id="registration-form">
         <form class="form-signup" v-show="showRegistration && !showlogin" @submit.prevent="register">
           <h2 v-class="error-message" v-if="registrationErrors">
@@ -143,10 +143,16 @@ export default {
 
 .right-div {
   text-align: center;
+      margin-top: 20px;
+  
 }
 
 .right-div > h2 {
   text-align: left;
+    margin-right: 100px;
+
+
+
 }
 
 .form-signin {
@@ -189,6 +195,7 @@ h1 {
 .logo {
     padding-left: 50px;
     padding-top: 25px;
+   
 }
 
 h2 {

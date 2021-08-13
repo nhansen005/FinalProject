@@ -3,6 +3,8 @@
 
 
   <nav>
+     
+
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'favorites' }"
         >Tinders</router-link
