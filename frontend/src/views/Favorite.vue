@@ -10,6 +10,7 @@
 </template>
  
 <script>
+
 import FavoritesList from "../components/FavoritesList.vue";
 import tinderService from "../services/TinderService";
 export default {

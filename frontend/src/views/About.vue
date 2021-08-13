@@ -1,11 +1,11 @@
 <template>
+<body>
   <div
-    style="
-      background-image: 'public/images/edgar-castrejon-1SPu0KT-Ejg-unsplash.jpg';
-    "
   >
+
     <h2 style="text-align: center">The team behind Chicken Tinder:</h2>
-    <table>
+    <h3 style="text-align: center; color:red">CutoffJortsCodeCrew™</h3>
+    <table id="code">
       <tbody>
      
           <td>
@@ -120,6 +120,7 @@
       <router-link v-bind:to="{ name: 'careers' }">Careers</router-link>
     </div>
   </div>
+  </body>
 </template>
 
 <script>
@@ -129,6 +130,12 @@ export default {
 </script>
 
 <style scoped>
+
+body{
+    color:rgb(43, 26, 26);
+    
+    
+}
 h1 {
   text-align: center;
 }
@@ -157,7 +164,15 @@ h1 {
 }
 #sasan {
   font-family: monospace;
-  color: rgb(10, 58, 66);
+  color: rgb(143, 162, 17);
   text-align: center;
 }
+#code {
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+
+}
+
+
 </style>

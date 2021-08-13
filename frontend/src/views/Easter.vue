@@ -1,6 +1,7 @@
 <template>
 <div>
-
+   <h3 style="text-align: center; color: green">GIT AHHHHTTAAA TAHHHHN!!!</h3>
+  <h3 style="text-align: center">US &nbsp; TOOOOO!!!!!</h3>
     <img :src="require('./../../public/images/IMG_1380.jpg')" alt="Logo" />
 </div>
   
@@ -18,6 +19,7 @@ export default {
 img{
     height: 900px;
     width: 700px;
+    margin-left: 400px;
 }
 
 </style>

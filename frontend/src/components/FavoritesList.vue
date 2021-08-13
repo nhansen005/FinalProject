@@ -1,47 +1,59 @@
 <template>
   <div>
-    <h2 style="text-align: center">{{ this.$store.state.user.username }} 's favorites</h2>
+    <h2 style="text-align: center">
+      {{ this.$store.state.user.username }} 's favorites
+    </h2>
 
-     <table
-  >
-    <thead>
-      <tr id="labels">
-        <th>Restaurant Name</th>
-        <th>Categories</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-  
-    <tbody>
-      <tr v-for="restaurant in restaurants" v-bind:key="restaurant.id">
-        
-        <td class="picture-and-name">
+    <table>
+      <thead>
+        <tr id="labels">
+          <th>Restaurant Name</th>
+          <th>Categories</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr v-for="restaurant in restaurants" v-bind:key="restaurant.id">
+          <td class="picture-and-name">
             <div class="restaurant-name">
-                <h3 class="restaurant-name">{{ restaurant.name }}</h3>
+              <h3 class="restaurant-name">{{ restaurant.name }}</h3>
             </div>
-            <img class="restaurant-pic" :src="restaurant.image_url" alt="No image provided">
-        </td>
-        <td><p v-for="category in restaurant.categories" :key="category.title">{{category.title}}</p></td>
-            <td>
+            <img
+              class="restaurant-pic"
+              :src="restaurant.image_url"
+              alt="No image provided"
+            />
+          </td>
+          <td>
+            <p v-for="category in restaurant.categories" :key="category.title">
+              {{ category.title }}
+            </p>
+          </td>
+          <td>
             <a :href="`tel:${restaurant.display_phone}`">{{
               restaurant.display_phone
             }}</a>
           </td>
-                  <td>
+          <td>
             <a
-              :href="`https://google.com/maps?q=${restaurant.location.display_address}`" target="_blank">
+              :href="`https://google.com/maps?q=${restaurant.location.display_address}`"
+              target="_blank"
+            >
               {{ restaurant.location.display_address[0] }},
               {{ restaurant.location.display_address[1] }}
             </a>
           </td>
 
-        <td><div v-on:click="removeFavorites(restaurant.id)"><i class="fas fa-times-circle fa-3x"></i></div></td>
-      </tr>
-    </tbody>
-
-      
+          <td>
+            <div v-on:click="removeFavorites(restaurant.id)">
+              <i class="fas fa-times-circle fa-3x"></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
@@ -71,9 +83,9 @@ export default {
     removeFavorites() {
       this.restaurants.shift(this.restaurants[0]);
       tinderService.deleteFavorites(this.restaurants[0].id);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

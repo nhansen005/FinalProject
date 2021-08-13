@@ -1,4 +1,5 @@
 <template>
+
 <div class ="careers">
   
 
@@ -19,13 +20,14 @@ BASIC REQUIREMENTS
 
 <p style="font-weight: bold">THE APPLICANT WILL:</p>
 <li>Be willing to work unreasonably long hours</li>
+<li>Be willing to accept little/no praise for jobs well done...you can always do better</li>
 <li>Be willing to accomadate unwanted advances in the workplace</li>
 <li>Be appreciative of the fact that, while the job *can* easily and reasonably be completed from home... That doesn't mean it *should* be. <p>We firmly believe you actually perform better while we watch you...See below:</p></li>
 
-<li>Be appreciative of our culture, and while leading with love and respect has proven to be a successful business model, we like to harvest a culture that leads by fear...</li>
-<li>Bonus points if the applicant is willing to cause irreparable damage to it's personal relationships and overall mental well-being in order to assimilate properly into our "culture"</li>
+<li>While leading with love and respect has proven to be a successful business model, we like to cultivate a culture that fosters fear...</li>
+<li>Bonus points if the applicant is willing to cause irreparable damage to It's personal relationships, and overall mental well-being, in order to assimilate properly into our "culture"</li>
 <li>This is an unpaid position to start, but we can revist at the 2 year mark pending certain requirements being met [see <router-link v-bind:to="{ name: 'legal' }">Here</router-link>]</li>
-
+<li>If you are the type to turn your head whilst your co-workers are committing fraud, WE WANT YOU!</li>
 
 
 
@@ -34,8 +36,12 @@ BASIC REQUIREMENTS
 </template>
 
 <script>
+
 export default {
-  name: 'careers'
+  name: 'careers',
+  components: {
+  
+  }
 
 }
 </script>

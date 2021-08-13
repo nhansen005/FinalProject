@@ -1,5 +1,6 @@
 <template>
   <div class="swipe-page">
+     
 
 
     <h3 v-on:click="displaySearch = !displaySearch">Custom search</h3>
@@ -418,9 +419,10 @@ h3 {
 
 .custom-search {
     font-family: "Roboto", sans-serif;
-    position: absolute;
-    left: 800px;
-    top: 185px;
+    position:absolute;
+    right: 25px;
+    top: 85px;
+   
 }
 
 #cust-location, #category, #search {
