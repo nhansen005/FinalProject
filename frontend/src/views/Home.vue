@@ -1,80 +1,132 @@
 <template>
-<div class="swipe-page">
-    <nav>
-        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{ name: 'favorites' }">Liked Restaurants</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
-    </nav>
+  <div class="swipe-page">
+        <div class=logo>
+      <h1>chicken tinder</h1>
+      <i class="fas fa-fire fa-3x"></i>
+</div>
 
-    <h1> chicken tinder </h1><i class="fas fa-fire fa-3x"></i>
-   
-        <h3 v-on:click="displaySearch = !displaySearch">Custom search</h3>
-        <div class="custom-search" v-show="displaySearch">
-            <input type="text" id="category" v-model="category" placeholder="Cuisine Type">
-            <br>
-            <input type="text" id="cust-location" v-model="customLocation" placeholder="Current Location">
-            <br>
-            <label for="input-range">
-                Searching Range: {{ mile }} Miles
-            </label>
-            <br>
-            <input type="range"
-            max="40000"
-            min="1609"
-            step="3218"
-            id="input-range"
-            v-model="radius">
-            <br>
-            <button id="search" v-on:click="search"> Search </button>
-        </div>
-    
 
-    <div class="restaurant-card" v-on:click="viewRestaurantDetails" v-show="!showDetails">
-        <div class="restaurant-info">
-            <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
-            <br>
-            <ul v-for="category in restaurants[0].categories" :key="category.title">
-                <li class="categories">{{ category.title }} </li>
-            </ul>
-        </div>
-        <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
+    <h3 v-on:click="displaySearch = !displaySearch" style="right: 100px">Custom search</h3>
+    <div class="custom-search" v-show="displaySearch" style="display:flex; flex-direction: column; align-items: center">
+      <input
+        type="text"
+        id="category"
+        v-model="category"
+        placeholder="Cuisine Type"
+      />
+      <br />
+      <input
+        type="text"
+        id="cust-location"
+        v-model="customLocation"
+        placeholder="Current Location"
+      />
+      <br />
+      <label for="input-range"> Searching Range: {{ mile }} Miles </label>
+      <br />
+      <input
+        type="range"
+        max="40000"
+        min="1609"
+        step="3218"
+        id="input-range"
+        v-model="radius"
+      />
+      <br />
+      <button id="search" v-on:click.prevent="search" style="position: relative; bottom: 30px ">Search</button>
+    </div>
+
+    <div
+      class="restaurant-card"
+      v-on:click="viewRestaurantDetails"
+      v-show="!showDetails"
+    >
+      <div class="restaurant-info">
+        <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
+        <br />
+        <ul v-for="category in restaurants[0].categories" :key="category.title">
+          <li class="categories">{{ category.title }}</li>
+        </ul>
+      </div>
+      <img
+        class="restaurant-pic"
+        :src="restaurants[0].image_url"
+        alt="Image not available"
+      />
     </div>
 
     <div class="like" v-on:click="like"><i class="fas fa-heart fa-5x"></i></div>
-    <div class="dislike" v-on:click="dislike"><i class="fas fa-times-circle fa-5x"></i></div>
-    
-
-    <div class="restaurant-details" v-on:click="viewRestaurantDetails" v-if="showDetails">
-          <div class="restaurant-info restaurant-detailed-info">
-            <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
-            <br>
-            <ul v-for="category in restaurants[0].categories" :key="category.title"><li class="categories">{{ category.title }} </li></ul>
-            <br>
-            <span class="average-rating"> Average rating: {{ restaurants[0].rating }}/5 ({{ restaurants[0].review_count  }} reviews)</span>
-            <p v-if="restaurants[0].price != null" class="restaurant-price"> {{restaurants[0].price}}</p>
-            <p class="location">{{ restaurants[0].name }} is located at {{ restaurants[0].location.display_address[0] }}, {{ restaurants[0].location.display_address[1] }}. Their phone number is {{ restaurants[0].display_phone  }}.</p>
-            <br>
-            <p class="open" v-if="currentRestaurant.hours[0].is_open_now">Currently open</p>
-            <p class="open" v-if="!currentRestaurant.hours[0].is_open_now">Currently closed</p>
-        </div>
-        <img class="restaurant-pic" :src="restaurants[0].image_url" alt="Image not available">
+    <div class="dislike" v-on:click="dislike">
+      <i class="fas fa-times-circle fa-5x"></i>
     </div>
 
+    <div
+      class="restaurant-details"
+      v-on:click="viewRestaurantDetails"
+      v-if="showDetails"
+    >
+      <div class="restaurant-info restaurant-detailed-info">
+        <h2 class="restaurant-name">{{ restaurants[0].name }}</h2>
+        <br />
+        <ul v-for="category in restaurants[0].categories" :key="category.title">
+          <li class="categories">{{ category.title }}</li>
+        </ul>
+        <br />
+        <span class="average-rating">
+          Average rating: {{ restaurants[0].rating }}/5 ({{
+            restaurants[0].review_count
+          }}
+          reviews)</span
+        >
+        <p v-if="restaurants[0].price != null" class="restaurant-price">
+          {{ restaurants[0].price }}
+        </p>
+        <p class="location">
+          {{ restaurants[0].name }} is located at
+          {{ restaurants[0].location.display_address[0] }},
+          {{ restaurants[0].location.display_address[1] }}. Their phone number
+          is {{ restaurants[0].display_phone }}.
+        </p>
+        <br />
+        <p class="open" v-if="currentRestaurant.hours[0].is_open_now">
+          Currently open
+        </p>
+        <p class="open" v-if="!currentRestaurant.hours[0].is_open_now">
+          Currently closed
+        </p>
+      </div>
+      <img
+        class="restaurant-pic"
+        :src="restaurants[0].image_url"
+        alt="Image not available"
+      />
+    </div>
 
     <div class="show-details-div">
-        <button class="show-details" v-show="!showDetails" v-on:click="viewRestaurantDetails">Restaurant Details</button>
-        <button class="show-details" v-show="showDetails" v-on:click="viewRestaurantDetails">Hide Restaurant Details</button>
+      <button
+        class="show-details"
+        v-show="!showDetails"
+        v-on:click="viewRestaurantDetails"
+      >
+        Restaurant Details
+      </button>
+      <button
+        class="show-details"
+        v-show="showDetails"
+        v-on:click="viewRestaurantDetails"
+      >
+        Hide Restaurant Details
+      </button>
     </div>
-
-</div>
+  </div>
 </template>
 
 <script>
-import tinderService from '../services/TinderService';
+import tinderService from "../services/TinderService";
 export default {
   name: "home",
   data() {
-      return {
+    return {
       restaurants: [],
       zipCode: this.$store.state.user.zipcode,
       customLocation: this.$store.state.user.zipcode,
@@ -82,66 +134,78 @@ export default {
       showDetails: false,
       currentRestaurant: {},
       mile: "5",
-      radius: '8000',
+      radius: "8000",
       displaySearch: false,
-      };
+    };
   },
   mounted() {
-      document.addEventListener("keydown", event => {
-          if (event.keyCode == 39) {
-            this.like();
-          }
-          if (event.keyCode == 38) {
-              this.viewRestaurantDetails();
-          }
-          if (event.keyCode == 37) {
-            this.like();
-          }
-      })
+    document.addEventListener("keydown", (event) => {
+      if (event.keyCode == 39) {
+        this.like();
+      }
+      if (event.keyCode == 38) {
+        this.viewRestaurantDetails();
+      }
+      if (event.keyCode == 37) {
+        this.like();
+      }
+    });
   },
   created() {
-    tinderService.getRestaurantsNoRadius(this.$store.state.user.zipcode, "").then(response => {
-      this.restaurants = response.data;
-      console.log("Here is the response", response.data)
-    }),
-    tinderService.getBusinessByID(this.restaurants[0].id).then(response => {
+    tinderService
+      .getRestaurantsNoRadius(this.$store.state.user.zipcode, this.category)
+      .then((response) => {
+        if (response.status == 200) {
+          this.restaurants = response.data;
+          console.log("Here is the response", response.data);
+        } else {
+          console.log("Yinz couldnt pull nothing");
+        }
+      }),
+      tinderService.getBusinessByID(this.restaurants[0].id).then((response) => {
         this.currentRestaurant = response.data;
-    });
+      });
   },
   watch: {
     mile: function (val) {
-      this.mile = val
+      this.mile = val;
       this.radius = val * 1609;
     },
     radius: function (val) {
-      this.radius = val,
-      this.mile = val/1609;
-    }
+      (this.radius = val), (this.mile = val / 1609);
+    },
   },
   methods: {
-      search() {
-        console.log("ran");
-        tinderService.getRestaurantsWithRadius(this.customLocation, this.category, this.radius).then(response => {
+    search() {
+      console.log("ran");
+      tinderService
+        .getRestaurantsWithRadius(
+          this.customLocation,
+          this.category.toLowerCase(),
+          this.radius
+        )
+        .then((response) => {
           this.restaurants = response.data;
-          console.log("Here is the response", response.data)
+          console.log("Here is the response", response.data);
         });
-      },
-      like() {
-        tinderService.addFavorites(this.restaurants[0].id);
-        this.showDetails = false;
-        this.restaurants.shift(this.restaurants[0]); 
-      },
-      dislike() {
-        this.showDetails = false;
-        this.restaurants.shift(this.restaurants[0]);  
-      },
-      viewRestaurantDetails() {
-        this.showDetails = !this.showDetails;
-        tinderService.getBusinessByID(this.restaurants[0].id).then(response => {
+    },
+    like() {
+      tinderService.addFavorites(this.restaurants[0].id);
+      this.showDetails = false;
+      this.restaurants.shift(this.restaurants[0]);
+    },
+    dislike() {
+      this.showDetails = false;
+      this.restaurants.shift(this.restaurants[0]);
+      tinderService.deleteFavorites(this.restaurants[0].id);
+    },
+    viewRestaurantDetails() {
+      this.showDetails = !this.showDetails;
+      tinderService.getBusinessByID(this.restaurants[0].id).then((response) => {
         this.currentRestaurant = response.data;
-    })
-      }
-  }
+      });
+    },
+  },
 };
 </script>
 
@@ -159,17 +223,7 @@ h1 {
     color: black;
     font-size: 3.5rem;
 }
-nav {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  font-family: "Roboto", sans-serif;
-  
-}
-nav a {
-  text-decoration: none;
-  color: rgb(237, 93, 77);
-}
+
 
 .fa-fire {
     color: rgb(237, 93, 77);
@@ -368,19 +422,23 @@ h3 {
 
 .custom-search {
     font-family: "Roboto", sans-serif;
-    position: absolute;
-    right: 25px;
+    position:absolute;
+    right: -10px;
     top: 85px;
+
+   
 }
 
 #cust-location, #category, #search {
     font-family: "Roboto", sans-serif;
     font-size: 1rem;
+    
 }
 
 #cust-location {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+   
 }
 
 label {
@@ -454,3 +512,4 @@ h3 {
 
 }
     </style>
+

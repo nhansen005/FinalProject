@@ -3,7 +3,7 @@
 <div class = "landing-page">
     <div class="left-div">
 
-      <div class="logo">
+      <div>
         <h1>chicken tinder</h1>
         <i class="fas fa-fire fa-3x"></i>
         <div id="registration-form">
@@ -143,10 +143,16 @@ export default {
 
 .right-div {
   text-align: center;
+      margin-top: 20px;
+  
 }
 
 .right-div > h2 {
   text-align: left;
+    margin-right: 100px;
+
+
+
 }
 
 .form-signin {
@@ -189,6 +195,7 @@ h1 {
 .logo {
     padding-left: 50px;
     padding-top: 25px;
+   
 }
 
 h2 {
@@ -293,6 +300,7 @@ button:hover {
       margin: 2vh auto;
       padding: 2vh 24vw;
     }
+    
 
    
 

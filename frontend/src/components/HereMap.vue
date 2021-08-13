@@ -28,7 +28,7 @@ export default {
       routingService: {},
       geocoder: {},
       directions: [],
-      apikey: "{Replace this with HERE API KEY}"
+      apikey: "{}"
       // You can get the API KEY from developer.here.com
     };
   },
@@ -65,65 +65,68 @@ export default {
       new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
       // add UI
-      H.ui.UI.createDefault(map, maptypes);
+      map.ui.UI.createDefault(map, maptypes);
       // End rendering the initial map
     },
-    // geocode(query) {
-    //     return new Promise((resolve, reject) => {
-    //         this.geocoder.geocode({ searchText: query }, data => {
-    //             if(data.Response.View[0].Result.length > 0) {
-    //                 data = data.Response.View[0].Result.map(location => {
-    //                     return {
-    //                         lat: location.Location.DisplayPosition.Latitude,
-    //                         lng: location.Location.DisplayPosition.Longitude
-    //                     };
-    //                 });
-    //                 resolve(data);
-    //             } else {
-    //                 reject({ "message": "No data found" });
-    //             }
-    //         }, error => {
-    //             reject(error);
-    //         });
-    //     });
-    // },
-    // route(start, finish) {
-    // var params = {
-    //     "mode": "fastest;car",
-    //     "representation": "display"
-    // }
-    // var waypoints = [];
-    // this.map.removeObjects(this.map.getObjects());
-    // this.directions = [];
-    // waypoints = [this.geocode(start), this.geocode(finish)];
-    // Promise.all(waypoints).then(result => {
-    //     var markers = [];
-    //     for(var i = 0; i < result.length; i++) {
-    //         params["waypoint" + i] = result[i][0].lat + "," + result[i][0].lng;
-    //         markers.push(new H.map.Marker(result[i][0]));
-    //     }
-    //     this.router.calculateRoute(params, data => {
-    //         if(data.response) {
-    //             for(var i = 0; i < data.response.route[0].leg.length; i++) {
-    //                 this.directions = this.directions.concat(data.response.route[0].leg[i].maneuver);
-    //             }
-    //             data = data.response.route[0];
-    //             var lineString = new H.geo.LineString();
-    //             data.shape.forEach(point => {
-    //                 var parts = point.split(",");
-    //                 lineString.pushLatLngAlt(parts[0], parts[1]);
-    //             });
-    //             var routeLine = new H.map.Polyline(lineString, {
-    //                 style: { strokeColor: "blue", lineWidth: 5 }
-    //             });
-    //             this.map.addObjects([routeLine, ...markers]);
-    //             this.map.setViewBounds(routeLine.getBounds());
-    //         }
-    //     }, error => {
-    //         console.error(error);
-    //     });
-    // });
-  // },
+    geocode(query) {
+      
+        return new Promise((resolve, reject) => {
+            this.geocoder.geocode({ searchText: query }, data => {
+                if(data.Response.View[0].Result.length > 0) {
+                    data = data.Response.View[0].Result.map(location => {
+                        return {
+                            lat: location.Location.DisplayPosition.Latitude,
+                            lng: location.Location.DisplayPosition.Longitude
+                        };
+                    });
+                    resolve(data);
+                } else {
+                    reject({ "message": "No data found" });
+                }
+            }, error => {
+                reject(error);
+            });
+        });
+    },
+    route(start, finish) {
+            const H = window.H;
+
+    var params = {
+        "mode": "fastest;car",
+        "representation": "display"
+    }
+    var waypoints = [];
+    this.map.removeObjects(this.map.getObjects());
+    this.directions = [];
+    waypoints = [this.geocode(start), this.geocode(finish)];
+    Promise.all(waypoints).then(result => {
+        var markers = [];
+        for(var i = 0; i < result.length; i++) {
+            params["waypoint" + i] = result[i][0].lat + "," + result[i][0].lng;
+            markers.push(new H.map.Marker(result[i][0]));
+        }
+        this.router.calculateRoute(params, data => {
+            if(data.response) {
+                for(var i = 0; i < data.response.route[0].leg.length; i++) {
+                    this.directions = this.directions.concat(data.response.route[0].leg[i].maneuver);
+                }
+                data = data.response.route[0];
+                var lineString = new H.geo.LineString();
+                data.shape.forEach(point => {
+                    var parts = point.split(",");
+                    lineString.pushLatLngAlt(parts[0], parts[1]);
+                });
+                var routeLine = new H.map.Polyline(lineString, {
+                    style: { strokeColor: "blue", lineWidth: 5 }
+                });
+                this.map.addObjects([routeLine, ...markers]);
+                this.map.setViewBounds(routeLine.getBounds());
+            }
+        }, error => {
+            console.error(error);
+        });
+    });
+  },
   created() {
  
   }
